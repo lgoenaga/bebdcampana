@@ -1,17 +1,14 @@
 {
   "name": "bdcampana",
   "version": "1.0.0",
-  "description": "Base de Datos para Almacenar información de Personas",
-  "main": "server.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "description": "Aplicación Almacenamiento de Información",
   "keywords": [
     "javascript",
     "react",
     "postgresql",
     "node",
     "html",
+    "express",
     "css"
   ],
   "author": "Luis Goenaga (luisgoenagap@gmail.com)",
