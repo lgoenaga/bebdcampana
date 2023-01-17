@@ -10,7 +10,7 @@ import {
   MdSupervisorAccount,
 } from "react-icons/md";
 
-import "../css/navbar.css";
+import "../css/header.css";
 
 let correo;
 
@@ -21,13 +21,15 @@ function BarraNavegacion() {
     <header className="header-navbar">
       <div className="row-one">
         <div className="col-one-img">
-          <img
-            className="BrandLogo "
-            src={logo}
-            alt="Logo"
-            width="80"
-            height="40"
-          />
+          <a title="Administracion" href="/">
+            <img
+              className="BrandLogo"
+              src={logo}
+              alt="Logo"
+              width="80"
+              height="40"
+            />
+          </a>
         </div>
         <div className="col-two-navbar">
           <Navbar

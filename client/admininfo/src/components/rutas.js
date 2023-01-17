@@ -7,6 +7,9 @@ import RegistroCiudadano from "../routes/registro";
 import LugarVotacioin from "../routes/lugarvotacion";
 import Contactos from "../routes/contactos";
 import Asistencia from "../routes/asistencia";
+
+import DatosPersonales from "../components/forms/datospersonales";
+
 import Footer from "./footer";
 import "../App.css";
 
@@ -23,7 +26,7 @@ const Rutas = () => {
           <Route exact path="/contactos" element={<Contactos />} />
           <Route exact path="/asistencia" element={<Asistencia />} />
 
-          
+          <Route exact path="/usuarios/crear" element={<DatosPersonales />} />
         </Routes>
 
         <Footer />

@@ -1,14 +1,7 @@
-
-.BrandLogo {
-  display: block;
-  margin: auto;
-  padding: 20px;
-}
-
-.titulo{
-  align-items: center;
-  align-content: center;
+.contenedor {
   display: flex;
-  justify-content: center;
-  margin-bottom: 100px;
+ justify-content: center;
+ align-items: center;
+
+  height: 76vh;
 }
