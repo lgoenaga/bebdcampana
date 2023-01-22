@@ -13,5 +13,17 @@
   ],
   "author": "Luis Goenaga (luisgoenagap@gmail.com)",
   "license": "UNLICENSED",
-  "private":"true"
+  "private": "true",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lgoenaga/bdcamapa.git"
+  },
+  "bugs": {
+    "url": "https://github.com/lgoenaga/bdcamapa/issues"
+  },
+  "homepage": "https://github.com/lgoenaga/bdcamapa#readme"
 }
