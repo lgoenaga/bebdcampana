@@ -1,11 +1,13 @@
 const { Router } = require("express");
-const RegistroCiudadano = require("../models/registro");
+const Contacto = require("../models/contacto");
+const moment = require("moment");
+const { default: mongoose } = require("mongoose");
 
 const router = Router();
 
-router.get("/list", async function (req, res) {
+router.get("/", async function (req, res) {
   try {
-    const ciudadanos = await RegistroCiudadano.find();
+    const ciudadanos = await Contacto.find();
     res.send(ciudadanos);
   } catch (error) {
     console.log("Ocurrio un error en el registro", error);
@@ -15,7 +17,7 @@ router.get("/list", async function (req, res) {
 
 router.get("/:documentoId", async function (req, res) {
   try {
-    const ciudadano = await RegistroCiudadano.findOne({
+    const ciudadano = await Contacto.findOne({
       identification: req.params.documentoId,
     });
 
@@ -29,7 +31,7 @@ router.get("/:documentoId", async function (req, res) {
 
 router.post("/", async function (req, res) {
   try {
-    const existCiudadano = await RegistroCiudadano.findOne({
+    const existCiudadano = await Contacto.findOne({
       identification: req.body.identification,
     });
 
@@ -37,20 +39,23 @@ router.post("/", async function (req, res) {
       return res.status(400).send("El ciudadano ya se encuentra registrado");
     }
 
-    let ciudadano = RegistroCiudadano();
+    let ciudadano = Contacto();
 
     ciudadano.identification = req.body.identification;
     ciudadano.firstName = req.body.firstName;
     ciudadano.secondName = req.body.secondName;
     ciudadano.firstSurname = req.body.firstSurname;
     ciudadano.secondSurname = req.body.secondSurname;
-    ciudadano.dateBirth = req.body.dateBirth;
-    ciudadano.dateCreation = new Date();
-    ciudadano.dateUpdate = new Date();
+    ciudadano.dateBirth = moment(req.body.dateBirth).format("YYYY-MM-DD");
+    ciudadano.dateCreation = moment(new Date()).format(
+      "YYYY-MM-DD h:mm:ss A"
+    );
+    ciudadano.dateUpdate = moment(new Date()).format("YYYY-MM-DD h:mm:ss A");
 
     ciudadano = await ciudadano.save();
 
     res.status(200).send(ciudadano);
+
   } catch (error) {
     console.log("El registro no se efectuo ", error);
     res.status(500).send("El registro no se efectuo ");
@@ -59,7 +64,7 @@ router.post("/", async function (req, res) {
 
 router.put("/:documentoId", async function (req, res) {
   try {
-    let ciudadano = await RegistroCiudadano.findOne({
+    let ciudadano = await Contacto.findOne({
       identification: req.params.documentoId,
     });
 
@@ -84,7 +89,7 @@ router.put("/:documentoId", async function (req, res) {
 
 router.delete("/:documentoId", async function (req, res) {
   try {
-    let ciudadano = await RegistroCiudadano.findOneAndDelete({
+    let ciudadano = await Contacto.findOneAndDelete({
       identification: req.params.documentoId,
     });
 

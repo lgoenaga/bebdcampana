@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
-const RegistroCiudadano = new Schema(
+const Contacto = new Schema(
   {
     identification: {
       type: String,
@@ -25,18 +25,15 @@ const RegistroCiudadano = new Schema(
       required: false,
     },
     dateBirth: {
-      type: Date,
-      default: Date.now,
+      type: String,
       required: false,
     },
     dateCreation: {
-      type: Date,
-      default: Date.now,
+      type: String,
       required: false,
     },
     dateUpdate: {
-      type: Date,
-      default: Date.now,
+      type: String,
       required: false,
     },
   },
@@ -45,4 +42,4 @@ const RegistroCiudadano = new Schema(
   }
 );
 
-module.exports = mongoose.model("registrociudadanos", RegistroCiudadano);
+module.exports = mongoose.model("contactos", Contacto);

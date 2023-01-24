@@ -1,9 +1,10 @@
 import React from "react";
+import { ListCiudadanos } from '../components/contactos';
 
 const ViewContactos = () => {
   return (
     <>
-      <h3>Vista de Contactos</h3>
+      <ListCiudadanos/>
     </>
   );
 };
