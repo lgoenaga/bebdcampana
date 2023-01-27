@@ -1,5 +1,5 @@
 import React from "react";
-import ViewRegistroCiudadano from "../views/registro";
+import ViewRegistroCiudadano from "../../views/contactos/contactocrear";
 
 const RegistroCiudadano = () => {
   return (

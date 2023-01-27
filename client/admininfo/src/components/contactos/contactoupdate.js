@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { Container } from "react-bootstrap";
 
 import Button from "react-bootstrap/Button";
@@ -8,10 +9,15 @@ import Row from "react-bootstrap/Row";
 
 
 
-import { createCiudadano } from "../../services/contactos";
+import { updateCiudadano, getCiudadano } from "../../services/contactos";
 
-export function CrearRegistroCiudadano() {
+export const UpdateCiudadano = () => {
+  const navigate = useNavigate(); 
+  const { documentoId } = useParams();
+
   const [valoresForm, setValoresForm] = useState({});
+
+  const [ciudadano, setCiudadano] = useState({});
 
   const {
     identification = "",
@@ -22,6 +28,29 @@ export function CrearRegistroCiudadano() {
     dateBirth = "",
   } = valoresForm;
 
+  useEffect(() => {
+    const mostrarcontacto = async () => {
+      try {
+        const { data } = await getCiudadano(documentoId);
+        setCiudadano(data);
+      } catch (error) {
+        console.log("Ciudadano no existe");
+      }
+    };
+    mostrarcontacto();
+  }, [documentoId]);
+
+  useEffect(() => {
+    setValoresForm({
+      identification: ciudadano.identification,
+      firstName: ciudadano.firstName,
+      secondName: ciudadano.secondName,
+      firstSurname: ciudadano.firstSurname,
+      secondSurname: ciudadano.secondSurname,
+      dateBirth: ciudadano.dateBirth,
+    });
+  }, [ciudadano]);
+
   const handleOnChange = ({ target }) => {
     const { name, value } = target;
     setValoresForm({ ...valoresForm, [name]: value });
@@ -30,7 +59,7 @@ export function CrearRegistroCiudadano() {
   const handleOnSubmit = async (e) => {
     e.preventDefault();
 
-    let data = '';
+    
 
     const ciudadano = {
       identification,
@@ -38,16 +67,18 @@ export function CrearRegistroCiudadano() {
       secondName,
       firstSurname,
       secondSurname,
-      dateBirth
+      dateBirth,
     };
 
+    let data = "";
     try {
-      data = await createCiudadano(ciudadano);
-
-      console.log("Usuario creado");
+      data = await updateCiudadano(documentoId, ciudadano);
+      console.log("Usuario actualizado correctamente");
       console.log(data);
+      navigate("/contactos");
+
     } catch (error) {
-      console.log("Usuario no ha sido creado,", error);
+      console.log("Usuario no se pudo actualizar");
     }
   };
 
@@ -123,7 +154,6 @@ export function CrearRegistroCiudadano() {
               />
             </Form.Group>
           </Row>
-
         </Form>
       </Container>
       <Container className="contenedorContactoUbicacion">
@@ -182,11 +212,8 @@ export function CrearRegistroCiudadano() {
         </Form>
       </Container>
       <Container className="button">
-        <Button
-          variant="primary"
-          onClick={handleOnSubmit }
-        >
-          Guardar
+        <Button variant="info" onClick={handleOnSubmit}>
+          actualizar
         </Button>
       </Container>
     </>
