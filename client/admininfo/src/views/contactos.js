@@ -1,5 +1,5 @@
 import React from "react";
-import { ListCiudadanos } from '../components/contactos';
+import { ListCiudadanos } from '../components/contactos/contactoslistar';
 
 const ViewContactos = () => {
   return (

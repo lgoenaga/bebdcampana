@@ -29,7 +29,7 @@ router.get("/:documentoId", async function (req, res) {
   }
 });
 
-router.post("/", async function (req, res) {
+router.post("/crear", async function (req, res) {
   try {
     const existCiudadano = await Contacto.findOne({
       identification: req.body.identification,

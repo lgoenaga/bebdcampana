@@ -57,7 +57,7 @@ function BarraNavegacion() {
                     Deshabilitar Usuario
                   </NavDropdown.Item>
                 </NavDropdown>
-                <Nav.Link href="/registro">
+                <Nav.Link href="/contactos/crear">
                   {" "}
                   <FaRegAddressCard /> Registro Ciudadano
                 </Nav.Link>

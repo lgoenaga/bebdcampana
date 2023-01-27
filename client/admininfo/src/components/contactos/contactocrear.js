@@ -1,13 +1,56 @@
-import React from "react";
+import React, { useState } from "react";
 import { Container } from "react-bootstrap";
 
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
+
 import "../../css/registrociudadano.css";
 
+import { createCiudadano } from "../../services/contactos";
+
 function RegistroCiudadano() {
+  const [valoresForm, setValoresForm] = useState({});
+
+  const {
+    identification = "",
+    firstName = "",
+    secondName = "",
+    firstSurname = "",
+    secondSurname = "",
+    dateBirth = "",
+  } = valoresForm;
+
+  const handleOnChange = ({ target }) => {
+    const { name, value } = target;
+    setValoresForm({ ...valoresForm, [name]: value });
+  };
+
+  const handleOnSubmit = (e) => {
+    e.preventDefault();
+
+    let data = '';
+
+    const ciudadano = {
+      identification,
+      firstName,
+      secondName,
+      firstSurname,
+      secondSurname,
+      dateBirth
+    };
+
+    try {
+      data = createCiudadano(ciudadano);
+
+      console.log("Usuario creado");
+      console.log(data);
+    } catch (error) {
+      console.log("Usuario no ha sido creado,", error);
+    }
+  };
+
   return (
     <>
       <Container className="contenedor-datosPersonales">
@@ -16,34 +59,71 @@ function RegistroCiudadano() {
           <Row className="mb-3">
             <Form.Group as={Col} controlId="formGridCedula">
               <Form.Label>Cédula</Form.Label>
-              <Form.Control type="text" placeholder="Entrar Cédula" />
+              <Form.Control
+                type="text"
+                placeholder="Entrar Cédula"
+                name="identification"
+                value={identification}
+                onChange={(e) => handleOnChange(e)}
+              />
             </Form.Group>
             <Form.Group as={Col} controlId="formGridBirthDate">
               <Form.Label>Fecha de Nacimiento</Form.Label>
-              <Form.Control type="date" placeholder="Fecha de Nacimiento" />
+              <Form.Control
+                type="date"
+                placeholder="Fecha de Nacimiento"
+                name="dateBirth"
+                value={dateBirth}
+                onChange={(e) => handleOnChange(e)}
+              />
             </Form.Group>
           </Row>
           <Row className="mb-3">
             <Form.Group as={Col} controlId="formGridFirstName">
               <Form.Label>Primer Nombre</Form.Label>
-              <Form.Control type="text" placeholder="Primer Nombre" />
+              <Form.Control
+                type="text"
+                placeholder="Primer Nombre"
+                name="firstName"
+                value={firstName}
+                onChange={(e) => handleOnChange(e)}
+              />
             </Form.Group>
             <Form.Group as={Col} controlId="formGridSecondName">
               <Form.Label>Segundo Nombre</Form.Label>
-              <Form.Control type="text" placeholder="Segundo Nombre" />
+              <Form.Control
+                type="text"
+                placeholder="Segundo Nombre"
+                name="secondName"
+                value={secondName}
+                onChange={(e) => handleOnChange(e)}
+              />
             </Form.Group>
           </Row>
           <Row className="mb-3">
             <Form.Group as={Col} controlId="formGridFisrtSurname">
               <Form.Label>Primer Apellido</Form.Label>
-              <Form.Control type="text" placeholder="Primer Apellido" />
+              <Form.Control
+                type="text"
+                placeholder="Primer Apellido"
+                name="firstSurname"
+                value={firstSurname}
+                onChange={(e) => handleOnChange(e)}
+              />
             </Form.Group>
 
             <Form.Group as={Col} controlId="formGridSecondSurname">
               <Form.Label>Segundo Apellido</Form.Label>
-              <Form.Control type="text" placeholder="Segundo Apellido" />
+              <Form.Control
+                type="text"
+                placeholder="Segundo Apellido"
+                name="secondSurname"
+                value={secondSurname}
+                onChange={(e) => handleOnChange(e)}
+              />
             </Form.Group>
           </Row>
+
         </Form>
       </Container>
       <Container className="contenedorContactoUbicacion">
@@ -62,10 +142,7 @@ function RegistroCiudadano() {
           <Row className="mb-3">
             <Form.Group as={Col} controlId="formGridEmail">
               <Form.Label>Correo electrónico</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Correo electrónico"
-              />
+              <Form.Control type="text" placeholder="Correo electrónico" />
             </Form.Group>
           </Row>
           <Row className="mb-3">
@@ -84,19 +161,13 @@ function RegistroCiudadano() {
           <Row className="mb-3">
             <Form.Group as={Col} controlId="formGridCelular">
               <Form.Label>Dirección</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Dirección"
-              />
+              <Form.Control type="text" placeholder="Dirección" />
             </Form.Group>
           </Row>
           <Row className="mb-3">
             <Form.Group as={Col} controlId="formGridTelefono">
               <Form.Label>Barrio / Vereda</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Barrio / Vereda"
-              />
+              <Form.Control type="text" placeholder="Barrio / Vereda" />
             </Form.Group>
           </Row>
           <Row className="mb-3">
@@ -111,7 +182,10 @@ function RegistroCiudadano() {
         </Form>
       </Container>
       <Container className="button">
-        <Button variant="primary" type="submit">
+        <Button
+          variant="primary"
+          onClick={handleOnSubmit }
+        >
           Guardar
         </Button>
       </Container>

@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-import { listCiudadanos } from "../services/contactos";
-import TableContactos from "./forms/contacto";
+import { listCiudadanos } from "../../services/contactos";
+import TableContactos from "../forms/contactoslistar";
 
-import "../css/contactos.css";
+import "../../css/contactos.css";
 
 export const ListCiudadanos = () => {
   const [ciudadanos, setCiudadanos] = useState([]);
