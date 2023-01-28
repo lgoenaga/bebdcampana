@@ -2,14 +2,12 @@ import React, { useState } from "react";
 import moment from "moment";
 import { Container } from "react-bootstrap";
 
-
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 
-
-import { createCiudadano } from "../../services/contactos";
+import { createCiudadano } from "../../routes/contactos";
 
 export function CrearRegistroCiudadano() {
   const [validated, setValidated] = useState(false);
@@ -91,7 +89,6 @@ export function CrearRegistroCiudadano() {
                 value={moment(dateBirth).format("DD-MMM-YYYY")}
                 onChange={(e) => handleOnChange(e)}
               />
-              
             </Form.Group>
           </Row>
           <Row className="mb-3">

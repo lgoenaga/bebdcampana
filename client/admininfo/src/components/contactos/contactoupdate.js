@@ -7,12 +7,10 @@ import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 
-
-
-import { updateCiudadano, getCiudadano } from "../../services/contactos";
+import { updateCiudadano, getCiudadano } from "../../routes/contactos";
 
 export const UpdateCiudadano = () => {
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
   const { documentoId } = useParams();
 
   const [valoresForm, setValoresForm] = useState({});
@@ -59,8 +57,6 @@ export const UpdateCiudadano = () => {
   const handleOnSubmit = async (e) => {
     e.preventDefault();
 
-    
-
     const ciudadano = {
       identification,
       firstName,
@@ -76,7 +72,6 @@ export const UpdateCiudadano = () => {
       console.log("Usuario actualizado correctamente");
       console.log(data);
       navigate("/contactos");
-
     } catch (error) {
       console.log("Usuario no se pudo actualizar");
     }

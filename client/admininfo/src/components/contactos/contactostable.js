@@ -1,16 +1,16 @@
 import React from "react";
 import Button from "react-bootstrap/Button";
 
-import { useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import { BsFillPenFill, BsFillTrashFill } from "react-icons/bs";
-import { deleteCiudadano } from "../../services/contactos";
+import { deleteCiudadano } from "../../routes/contactos";
 
 const TableContactos = (props) => {
   const { noReg, identification, firstName, firstSurname, dateBirth } =
     props.obj;
 
-  const navigate = useNavigate();  
+  const navigate = useNavigate();
 
   const borrarContacto = async () => {
     let data = "";
@@ -39,8 +39,11 @@ const TableContactos = (props) => {
           <Button variant="danger" onClick={borrarContacto}>
             <BsFillTrashFill />
           </Button>
-          <Button variant="info" onClick={()=>navigate(`/contactos/${identification}`)}>
-            <BsFillPenFill/>
+          <Button
+            variant="info"
+            onClick={() => navigate(`/contactos/${identification}`)}
+          >
+            <BsFillPenFill />
           </Button>
         </td>
       </tr>

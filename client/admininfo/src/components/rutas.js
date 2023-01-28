@@ -2,12 +2,12 @@ import React from "react";
 import { Routes, Route } from "react-router-dom";
 
 import BarraNavegacion from "./header";
-import Administracion from "../routes/administracion";
-import RegistroCiudadano from "../routes/contactos/contactocrear";
-import UpdateRegistroCiudadano from "../routes/contactos/contactoupdate";
-import LugarVotacioin from "../routes/lugarvotacion";
-import Contactos from "../routes/contactos/contactos";
-import Asistencia from "../routes/asistencia";
+import Administracion from "../services/administracion";
+import RegistroCiudadano from "../services/contactos/contactocrear";
+import UpdateRegistroCiudadano from "../services/contactos/contactoupdate";
+import LugarVotacioin from "../services/lugarvotacion";
+import Contactos from "../services/contactos/contactos";
+import Asistencia from "../services/asistencia";
 
 import Footer from "./footer";
 import "../App.css";

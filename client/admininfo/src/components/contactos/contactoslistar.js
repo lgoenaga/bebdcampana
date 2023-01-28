@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { listCiudadanos } from "../../services/contactos";
+import { listCiudadanos } from "../../routes/contactos";
 import TableContactos from "./contactostable";
 
 import "../../css/contactos.css";
