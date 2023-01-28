@@ -25,5 +25,8 @@
   "bugs": {
     "url": "https://github.com/lgoenaga/bdcamapa/issues"
   },
-  "homepage": "https://github.com/lgoenaga/bdcamapa#readme"
+  "homepage": "https://github.com/lgoenaga/bdcamapa#readme",
+  "dependencies": {
+    "moment": "^2.29.4"
+  }
 }

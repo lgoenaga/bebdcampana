@@ -1,5 +1,7 @@
 import React, { useState } from "react";
+import moment from "moment";
 import { Container } from "react-bootstrap";
+
 
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
@@ -7,10 +9,11 @@ import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 
 
-
 import { createCiudadano } from "../../services/contactos";
 
 export function CrearRegistroCiudadano() {
+  const [validated, setValidated] = useState(false);
+
   const [valoresForm, setValoresForm] = useState({});
 
   const {
@@ -27,10 +30,18 @@ export function CrearRegistroCiudadano() {
     setValoresForm({ ...valoresForm, [name]: value });
   };
 
-  const handleOnSubmit = async (e) => {
-    e.preventDefault();
+  const handleOnSubmit = async (event) => {
+    event.preventDefault();
 
-    let data = '';
+    const form = event.currentTarget;
+    if (form.checkValidity() === false) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+
+    setValidated(true);
+
+    let data = "";
 
     const ciudadano = {
       identification,
@@ -38,7 +49,7 @@ export function CrearRegistroCiudadano() {
       secondName,
       firstSurname,
       secondSurname,
-      dateBirth
+      dateBirth,
     };
 
     try {
@@ -54,7 +65,7 @@ export function CrearRegistroCiudadano() {
   return (
     <>
       <Container className="contenedor-datosPersonales">
-        <Form className="formDatosPersonales">
+        <Form className="formDatosPersonales" noValidate validated={validated}>
           <Form.Label>Datos Personales</Form.Label>
           <Row className="mb-3">
             <Form.Group as={Col} controlId="formGridCedula">
@@ -65,17 +76,22 @@ export function CrearRegistroCiudadano() {
                 name="identification"
                 value={identification}
                 onChange={(e) => handleOnChange(e)}
+                required
               />
+              <Form.Control.Feedback type="invalid">
+                No puede estar vacio
+              </Form.Control.Feedback>
             </Form.Group>
             <Form.Group as={Col} controlId="formGridBirthDate">
               <Form.Label>Fecha de Nacimiento</Form.Label>
               <Form.Control
-                type="date"
                 placeholder="Fecha de Nacimiento"
                 name="dateBirth"
-                value={dateBirth}
+                type="date"
+                value={moment(dateBirth).format("DD-MMM-YYYY")}
                 onChange={(e) => handleOnChange(e)}
               />
+              
             </Form.Group>
           </Row>
           <Row className="mb-3">
@@ -87,7 +103,11 @@ export function CrearRegistroCiudadano() {
                 name="firstName"
                 value={firstName}
                 onChange={(e) => handleOnChange(e)}
+                required
               />
+              <Form.Control.Feedback type="invalid">
+                No puede estar vacio
+              </Form.Control.Feedback>
             </Form.Group>
             <Form.Group as={Col} controlId="formGridSecondName">
               <Form.Label>Segundo Nombre</Form.Label>
@@ -109,7 +129,11 @@ export function CrearRegistroCiudadano() {
                 name="firstSurname"
                 value={firstSurname}
                 onChange={(e) => handleOnChange(e)}
+                required
               />
+              <Form.Control.Feedback type="invalid">
+                No puede estar vacio
+              </Form.Control.Feedback>
             </Form.Group>
 
             <Form.Group as={Col} controlId="formGridSecondSurname">
@@ -123,7 +147,6 @@ export function CrearRegistroCiudadano() {
               />
             </Form.Group>
           </Row>
-
         </Form>
       </Container>
       <Container className="contenedorContactoUbicacion">
@@ -182,13 +205,10 @@ export function CrearRegistroCiudadano() {
         </Form>
       </Container>
       <Container className="button">
-        <Button
-          variant="primary"
-          onClick={handleOnSubmit }
-        >
+        <Button variant="primary" onClick={handleOnSubmit}>
           Guardar
         </Button>
       </Container>
     </>
   );
-};
+}
