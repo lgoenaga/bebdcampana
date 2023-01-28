@@ -1,0 +1,11 @@
+@media (max-width: 600px) {
+ .LogoLogin {
+    width: 200px;
+  }
+} 
+
+@media (max-width: 1030px) {
+ .LogoLogin {
+    width: 500px;
+  }
+}  
