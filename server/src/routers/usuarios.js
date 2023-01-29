@@ -56,9 +56,9 @@ router.get("/:userLogin", async function (req, res) {
 
     if (!usuario) return res.status(404).send("usuario no se encuentra");
 
-    res.status(200).send(usuario);
+    return res.status(200).send(usuario);
   } catch (error) {
-    res.status(500).send("Ocurrio un error al tratar de leer el usuario");
+    return res.status(500).send("Ocurrio un error al tratar de leer el usuario");
   }
 });
 

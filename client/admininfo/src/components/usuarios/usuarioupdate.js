@@ -30,6 +30,7 @@ export const UpdateRegistroUsuario = () => {
       try {
         const { data } = await getUsuario(userLogin);
         setUsuario(data);
+        
       } catch (error) {
         console.log("Usuario no existe");
       }

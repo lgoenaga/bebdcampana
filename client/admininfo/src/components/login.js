@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-
+import React, { useState , useEffect} from "react";
+import { useNavigate } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Container from "react-bootstrap/Container";
@@ -8,21 +8,34 @@ import Col from "react-bootstrap/Col";
 import logo from "../img/logo.png";
 import "../css/login.css";
 
+import { getUsuario } from "../routes/login";
+
 function Login() {
+  const navigate = useNavigate();
+  const [usuario, setUsuario] = useState({});
   const [validated, setValidated] = useState(false);
   const [valoresForm, setValoresForm] = useState({});
 
-  const {
-    user = "",
-    password = "",
-  } = valoresForm;
+  const { user = "", password = "" } = valoresForm;
 
-    const handleOnChange = ({ target }) => {
-      const { name, value } = target;
-      setValoresForm({ ...valoresForm, [name]: value });
-    };
+  const handleOnChange = ({ target }) => {
+    const { name, value } = target;
+    setValoresForm({ ...valoresForm, [name]: value });
+  };
 
-    const handleOnSubmit = async (event) => {
+      useEffect(() => {
+        const mostrarusuario = async () => {
+          try {
+            const { data } = await getUsuario(user);
+            setUsuario(data);
+          } catch (error) {
+            console.log("Usuario no existe");
+          }
+        };
+        mostrarusuario();
+      }, [user]);
+
+  const handleOnSubmit = async (event) => {
     event.preventDefault();
 
     const form = event.currentTarget;
@@ -33,14 +46,15 @@ function Login() {
 
     setValidated(true);
 
-    let data = "";
-
-    const usuario = {
-      user,
-      password
+    if (usuario.user===user)
+    {
+      console.log('Usuario Autorizado');
+      navigate('/');
+    }else{
+      console.log("Datos Incorrectos");
     }
-
-  }
+  
+  };
 
   return (
     <Container>
@@ -72,9 +86,6 @@ function Login() {
           <Form.Text className="text-muted">
             Never share your password with anyone.
           </Form.Text>
-          <Form.Group className="mb-3" controlId="formBasicCheckbox">
-            <Form.Check type="checkbox" label="Check me out" />
-          </Form.Group>
           <Button variant="primary" onClick={handleOnSubmit}>
             Enviar
           </Button>
