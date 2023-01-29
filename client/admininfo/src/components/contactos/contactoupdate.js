@@ -69,11 +69,11 @@ export const UpdateCiudadano = () => {
     let data = "";
     try {
       data = await updateCiudadano(documentoId, ciudadano);
-      console.log("Usuario actualizado correctamente");
+      console.log("Ciudadano actualizado correctamente");
       console.log(data);
       navigate("/contactos");
     } catch (error) {
-      console.log("Usuario no se pudo actualizar");
+      console.log("Ciudadano no se pudo actualizar");
     }
   };
 

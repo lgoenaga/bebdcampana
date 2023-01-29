@@ -12,8 +12,8 @@ export const deleteUsuario = (user) => {
   return Axios.delete(`usuarios/${user}`);
 };
 
-export const updateUsuario = (user, data) => {
-  return Axios.put(`usuarios/${user}`, data);
+export const updateUsuario = (userLogin, data) => {
+  return Axios.put(`usuarios/${userLogin}`, data);
 };
 
 export const getUsuario = (user) => {

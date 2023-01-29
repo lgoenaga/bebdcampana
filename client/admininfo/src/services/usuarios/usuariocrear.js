@@ -1,7 +1,7 @@
 import React from "react";
 import ViewCrearUsuario from "../../views/usuarios/usuariocrear";
 
-const RegistroUsuario = () => {
+const CrearUsuario = () => {
   return (
     <>
       <ViewCrearUsuario />
@@ -9,4 +9,4 @@ const RegistroUsuario = () => {
   );
 };
 
-export default RegistroUsuario;
+export default CrearUsuario;

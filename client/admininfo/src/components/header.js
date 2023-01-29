@@ -37,7 +37,8 @@ function BarraNavegacion() {
             expand="lg"
             bg="light"
             variant="light"
-            className="menuNavbar">
+            className="menuNavbar"
+          >
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse id="responsive-navbar-nav">
               <Nav className="me-auto">
@@ -45,17 +46,16 @@ function BarraNavegacion() {
                   title=<span>
                     <VscSettingsGear /> Usuarios
                   </span>
-                  id="collasible-nav-dropdown">
+                  id="collasible-nav-dropdown"
+                >
+                  <NavDropdown.Divider />
+                  <NavDropdown.Item href="/usuarios">
+                    Listar Usuario
+                  </NavDropdown.Item>
                   <NavDropdown.Item href="/usuarios/crear">
                     Crear Usuario
                   </NavDropdown.Item>
-                  <NavDropdown.Item href="/usuarios/actualizar">
-                    Actualizar Usuario
-                  </NavDropdown.Item>
                   <NavDropdown.Divider />
-                  <NavDropdown.Item href="/usuarios/inhabilitar">
-                    Deshabilitar Usuario
-                  </NavDropdown.Item>
                 </NavDropdown>
                 <Nav.Link href="/contactos/crear">
                   {" "}

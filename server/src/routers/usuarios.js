@@ -48,4 +48,57 @@ router.get('/', async function(req, res){
 
 });
 
+router.get("/:userLogin", async function (req, res) {
+  try {
+    const usuario = await Usuario.findOne({
+      user: req.params.userLogin,
+    });
+
+    if (!usuario) return res.status(404).send("usuario no se encuentra");
+
+    res.status(200).send(usuario);
+  } catch (error) {
+    res.status(500).send("Ocurrio un error al tratar de leer el usuario");
+  }
+});
+
+router.put("/:userLogin", async function (req, res) {
+  try {
+    let usuario = await Usuario.findOne({
+      user: req.params.userLogin,
+    });
+
+    if (!usuario) return res.status(404).send("Usuario no se encuentra");
+
+    usuario.password = req.body.password;
+    usuario.rol = req.body.rol;
+    usuario.estado = req.body.estado;
+    usuario.dateUpdate = new Date();
+
+    usuario = await usuario.save();
+
+    res.status(200).send(usuario);
+  } catch (error) {
+    res
+      .status(500)
+      .send("Ocurrio un error al tratar de actualizar el usuario");
+  }
+});
+
+router.delete("/:userLogin", async function (req, res) {
+  try {
+    let usuario = await Usuario.findOneAndDelete({
+      user: req.params.userLogin,
+    });
+
+    if (!usuario) {
+      return res.status(404).send("Usuario no esta registrado");
+    } else {
+      return res.status(200).send("Usuario eliminado con exito");
+    }
+  } catch (error) {
+    res.status(500).send("El Usuario no se pudo eliminar");
+  }
+});
+
 module.exports = router;
