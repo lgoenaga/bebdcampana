@@ -43,14 +43,14 @@ function BarraNavegacion() {
               <Nav className="me-auto">
                 <NavDropdown
                   title=<span>
-                    <VscSettingsGear /> Administración
+                    <VscSettingsGear /> Usuarios
                   </span>
                   id="collasible-nav-dropdown">
                   <NavDropdown.Item href="/usuarios/crear">
                     Crear Usuario
                   </NavDropdown.Item>
-                  <NavDropdown.Item href="/usuarios/persmisos">
-                    Asignar Permisos
+                  <NavDropdown.Item href="/usuarios/actualizar">
+                    Actualizar Usuario
                   </NavDropdown.Item>
                   <NavDropdown.Divider />
                   <NavDropdown.Item href="/usuarios/inhabilitar">

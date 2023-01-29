@@ -21,6 +21,8 @@ app.use(
 );
 
 app.use("/contactos", require("./routers/contactos"));
+app.use("/usuarios", require("./routers/usuarios"));
+
 
 app.get("/api", (req, res) => {
   res.json({ message: "Hola desde el servidor!" });

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import moment from "moment";
 import { Container } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
@@ -10,6 +11,7 @@ import Row from "react-bootstrap/Row";
 import { createCiudadano } from "../../routes/contactos";
 
 export function CrearRegistroCiudadano() {
+  const navigate = useNavigate();
   const [validated, setValidated] = useState(false);
 
   const [valoresForm, setValoresForm] = useState({});
@@ -55,6 +57,7 @@ export function CrearRegistroCiudadano() {
 
       console.log("Usuario creado");
       console.log(data);
+      navigate("/contactos");
     } catch (error) {
       console.log("Usuario no ha sido creado,", error);
     }
