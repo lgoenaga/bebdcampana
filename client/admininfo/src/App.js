@@ -1,19 +1,15 @@
 import React, { Component } from "react";
-import "./App.css";
 
-import Rutas from './routes/rutas';
+import Rutas from "./rutas";
 
 class App extends Component {
-
-  render(){
+  render() {
     return (
       <>
         <Rutas />;
       </>
-    ); 
-    
+    );
   }
-  
-};
+}
 
 export default App;

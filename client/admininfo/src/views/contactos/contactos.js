@@ -1,10 +1,14 @@
 import React from "react";
-import { ListCiudadanos } from '../../components/contactos/contactoslistar';
+import { ListCiudadanos } from "../../services/contactos/contactoslistar";
+import BarraNavegacion from "../../components/header";
+import Footer from "../../components/footer";
 
 const ViewContactos = () => {
   return (
     <>
-      <ListCiudadanos/>
+      <BarraNavegacion />
+      <ListCiudadanos />
+      <Footer />
     </>
   );
 };

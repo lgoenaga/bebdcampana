@@ -1,31 +1,31 @@
 import { useState, useEffect } from "react";
-import { listUsuarios } from "../../routes/usuarios";
+import { listCiudadanos } from "../../routes/contactos";
+import TableContactos from "./contactostable";
 
 import "../../css/contactos.css";
-import TableUsuarios from "./usuariostable";
 
-export const ListUsuarios = () => {
-  const [usuarios, setUsuarios] = useState([]);
+export const ListCiudadanos = () => {
+  const [ciudadanos, setCiudadanos] = useState([]);
 
-  const mostrarUsuarios = async () => {
+  const mostrarCiudadanos = async () => {
     try {
-      const { data } = await listUsuarios();
-      setUsuarios(data);
+      const { data } = await listCiudadanos();
+      setCiudadanos(data);
     } catch (error) {
       console.log("Error desde el servidor verificar backend ", error);
     }
   };
 
   useEffect(() => {
-    mostrarUsuarios();
+    mostrarCiudadanos();
   }, []);
 
   const DataTable = () => {
     let noReg = 1;
 
-    return usuarios.map((res, i) => {
+    return ciudadanos.map((res, i) => {
       res.noReg = noReg++;
-      return <TableUsuarios obj={res} key={i} />;
+      return <TableContactos obj={res} key={i} />;
     });
   };
 
@@ -35,9 +35,11 @@ export const ListUsuarios = () => {
         <thead className="table-group-divider">
           <tr className="table-warning">
             <th scope="col">#</th>
-            <th scope="col">Usuario</th>
-            <th scope="col">Rol</th>
-            <th scope="col">Estado</th>
+            <th scope="col">Identificacion</th>
+            <th scope="col">Primer Nombre</th>
+            <th scope="col">Primer Apellido</th>
+            <th scope="col">Fecha Nacimiento</th>
+            <th scope="col">Acción</th>
           </tr>
         </thead>
         <tbody className="table-group-divider">{DataTable()}</tbody>

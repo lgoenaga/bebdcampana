@@ -1,0 +1,8 @@
+@media (min-width: 320px) {
+
+body {
+    min-height: 90vh;
+    min-width: 90vw;
+}
+
+}

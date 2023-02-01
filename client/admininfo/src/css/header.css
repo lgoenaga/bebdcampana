@@ -1,3 +1,16 @@
+#root{
+  font-size: small;
+}
+
+html {
+    height: 99vh;
+    width: 99vw;
+}
+body {
+    min-height: 99vh;
+    min-width: 99vw;
+}
+
 .row-one {
   display: flex;
   align-items: center;
@@ -15,12 +28,13 @@
   display: flex;
   justify-content: center;
   width: 100%;
+  padding-left: 20xp;
+  
 }
 
 .row-two {
   margin: 5px;
   padding: 5px;
-  font-size: small;
 }
 
 .separatorNavbar {
@@ -29,38 +43,46 @@
   margin-bottom: 5px;
 }
 
-
-@media (max-width: 992px) {
-  .row-one .col-two-navbar {
-    justify-content: flex-end;
-    font-size: small;
+@media (min-width: 992px) {
+    a.nav-link {
+    margin-left: 10px;
+    margin-right: 10px;
   }
 
-  a.nav-link {
+}
+
+@media (max-width: 991px) {
+  .row-one .col-two-navbar {
+    justify-content: flex-end;
+  }
+    a.nav-link {
     padding: 2px;
   }
 
-  .row-one {
-    margin: 0;
-  }
+}
 
-  .row-two {
-    margin: 0;
-  }
+@media (max-width: 791px) {
+.contenedor{
+
+  height: 70vh;
+}
 
 }
 
-@media (max-width: 792px) {
-  .row-one .col-two-navbar {
-    justify-content: flex-end;
-    font-size: small;
-  }
+@media (max-width: 506px) {
+.contenedor{
+
+  height: 67vh;
 }
 
-@media (max-width: 592px) {
-  .row-one .col-two-navbar {
-    justify-content: flex-end;
-    font-size: small;
-  }
+}
+
+@media (max-height: 450px) {
+.contenedor{
+
+  height: 27vh;
+  
+}
 
 }
+

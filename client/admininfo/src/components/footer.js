@@ -8,11 +8,13 @@ function Footer() {
   return (
     <>
       <footer className="footer-app">
-        <span className="creator">
+       <nav className="navbar fixed-bottom">
+        <div className="container-fluid">
           <p>Pagina Elaborada por : {names}</p>
           <p>correo electronico : {correo}</p>
           <p>Todos los derechos reservados</p>
-        </span>
+        </div>
+      </nav>
       </footer>
     </>
   );
