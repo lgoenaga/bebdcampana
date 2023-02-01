@@ -1,17 +1,13 @@
-*{
-    margin: 0;
-    padding: 0;
+* {
+  margin: 0;
+  padding: 0;
 }
 
-
-
-td{
-    color: blue;
+td {
+  color: blue;
 }
-th{
-    color: blue;
-    background-color: red;
-    background: red;
+th {
+  color: blue;
+  background-color: red;
+  background: red;
 }
-
-

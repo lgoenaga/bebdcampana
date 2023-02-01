@@ -1,10 +1,10 @@
-.contenedor-usuarios{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
+.contenedor-usuarios {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
 }
 
 .d-flex {
-    justify-content: center;
+  justify-content: center;
 }

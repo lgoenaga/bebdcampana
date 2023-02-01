@@ -1,14 +1,19 @@
-
+.button-login{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
 
 @media (max-width: 600px) {
-  
- .LogoLogin {
+  .LogoLogin {
     width: 200px;
   }
-} 
+}
 
 @media (max-width: 1030px) {
- .LogoLogin {
+  .LogoLogin {
     width: 500px;
   }
-}  
+}

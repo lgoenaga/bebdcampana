@@ -1,4 +1,4 @@
-import React, { useState , useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
@@ -6,7 +6,6 @@ import Container from "react-bootstrap/Container";
 import Col from "react-bootstrap/Col";
 
 import logo from "../img/logo.png";
-import "../css/login.css";
 
 import { getUsuario } from "../routes/login";
 
@@ -23,17 +22,17 @@ function Login() {
     setValoresForm({ ...valoresForm, [name]: value });
   };
 
-      useEffect(() => {
-        const mostrarusuario = async () => {
-          try {
-            const { data } = await getUsuario(user);
-            setUsuario(data);
-          } catch (error) {
-            console.log("Usuario no existe");
-          }
-        };
-        mostrarusuario();
-      }, [user]);
+  useEffect(() => {
+    const mostrarusuario = async () => {
+      try {
+        const { data } = await getUsuario(user);
+        setUsuario(data);
+      } catch (error) {
+        console.log("Usuario no existe");
+      }
+    };
+    mostrarusuario();
+  }, [user]);
 
   const handleOnSubmit = async (event) => {
     event.preventDefault();
@@ -46,21 +45,19 @@ function Login() {
 
     setValidated(true);
 
-    if (usuario.user===user)
-    {
-      console.log('Usuario Autorizado');
-      navigate('/');
-    }else{
+    if (usuario.user === user) {
+      console.log("Usuario Autorizado");
+      navigate("/");
+    } else {
       console.log("Datos Incorrectos");
     }
-  
   };
 
   return (
     <Container>
       <Col>
-        <Form noValidate validated={validated}>
-          <Form.Group className="mb-3" controlId="formBasicEmail">
+        <Form className="FormLogin" noValidate validated={validated}>
+          <Form.Group className="mb-3" controlId="formBasicUser">
             <Form.Label>Usuario</Form.Label>
             <Form.Control
               type="text"
@@ -82,13 +79,16 @@ function Login() {
               onChange={(e) => handleOnChange(e)}
               required
             />
+            <Form.Text className="text-muted">
+              Never share your password with anyone.
+            </Form.Text>
           </Form.Group>
-          <Form.Text className="text-muted">
-            Never share your password with anyone.
-          </Form.Text>
-          <Button variant="primary" onClick={handleOnSubmit}>
-            Enviar
-          </Button>
+
+          <Form.Group className="button-login">
+            <Button variant="primary" onClick={handleOnSubmit}>
+              Enviar
+            </Button>
+          </Form.Group>
         </Form>
       </Col>
       <Col>

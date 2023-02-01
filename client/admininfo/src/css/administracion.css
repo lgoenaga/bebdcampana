@@ -1,36 +1,26 @@
-
 .contenedor {
-  
-display: flex;
- justify-content: center;
- align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   height: 73vh;
 }
 
 @media (max-width: 793px) {
-
-.contenedor img{
-  height: min-content;
-  width: min-content;
-}
+  .contenedor img {
+    height: min-content;
+    width: min-content;
+  }
 }
 
 @media (max-height: 506px) {
-
-
-.contenedor img{
-  
-  height: 25vh;
-
-}
-
+  .contenedor img {
+    height: 25vh;
+  }
 }
 
 @media (max-height: 355px) {
-.contenedor-app{
-  height: 70vh;
-}
-
-
+  .contenedor-app {
+    height: 70vh;
+  }
 }
