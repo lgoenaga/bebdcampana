@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
@@ -10,8 +10,8 @@ import logo from "../img/logo.png";
 import { getUsuario } from "../routes/login";
 
 function Login() {
+
   const navigate = useNavigate();
-  const [usuario, setUsuario] = useState({});
   const [validated, setValidated] = useState(false);
   const [valoresForm, setValoresForm] = useState({});
 
@@ -22,35 +22,26 @@ function Login() {
     setValoresForm({ ...valoresForm, [name]: value });
   };
 
-  useEffect(() => {
-    const mostrarusuario = async () => {
-      try {
-        const { data } = await getUsuario(user);
-        setUsuario(data);
-      } catch (error) {
-        console.log("Usuario no existe");
+  const mostrarusuario = async () => {
+
+    const {data} = await getUsuario(user);
+
+      if (data.user === user) {
+        console.log("Usuario autorizado");
+        navigate("/inicio");
+      } else {
+        console.log("Datos no coinciden");
       }
-    };
-    mostrarusuario();
-  }, [user]);
+
+  };
 
   const handleOnSubmit = async (event) => {
     event.preventDefault();
 
-    const form = event.currentTarget;
-    if (form.checkValidity() === false) {
-      event.preventDefault();
-      event.stopPropagation();
-    }
-
     setValidated(true);
 
-    if (usuario.user === user) {
-      console.log("Usuario Autorizado");
-      navigate("/");
-    } else {
-      console.log("Datos Incorrectos");
-    }
+    await mostrarusuario();
+
   };
 
   return (
@@ -85,7 +76,11 @@ function Login() {
           </Form.Group>
 
           <Form.Group className="button-login">
-            <Button variant="primary" onClick={handleOnSubmit}>
+            <Button
+              variant="primary"
+              className="boton"
+              onClick={handleOnSubmit}
+            >
               Enviar
             </Button>
           </Form.Group>

@@ -4,7 +4,7 @@
   "description": "BackEnd Aplicación Almacenamiento de Información",
   "main": "index.js",
   "scripts": {
-    "start": "node ./src/index.js",
+    "start": "pm2 start ./src/index.js --name bdcampana",
     "dev": "nodemon ./src/index.js"
   },
   "author": "Luis Goenaga (luisgoenagap@gmail.com)",

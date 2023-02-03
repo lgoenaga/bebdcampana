@@ -30,6 +30,7 @@ const Rutas = () => {
           path="/contactos/:documentoId"
           element={<ViewUpdateCiudadano />}
         />
+        <Route exact path="/inicio" element={<ViewAdministracion />} />
         <Route exact path="/lugarvotacion" element={<ViewLugarVotacion />} />
         <Route exact path="/contactos" element={<ViewContactos />} />
         <Route exact path="/asistencia" element={<ViewAsistencia />} />
