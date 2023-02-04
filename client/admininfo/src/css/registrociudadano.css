@@ -1,12 +1,9 @@
 .contenedor-datosPersonales {
-
   border: solid 1px;
   border-radius: 20px;
   width: 99%;
   min-height: max-content;
   max-height: min-content;
-
-
 }
 
 .contenedorContactoUbicacion {
@@ -16,7 +13,6 @@
   margin: 0;
   padding: 0;
 }
-
 
 .formDatosContacto {
   width: 49%;
@@ -93,8 +89,6 @@
 }
 
 @media (min-width: 991px) {
-
-
   .fixed-bottom {
     display: grid;
     align-content: space-between;
