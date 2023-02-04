@@ -1,5 +1,5 @@
 import React from "react";
-import "../css/footer.css";
+
 
 let correo = "luisgoenagap@gmail.com";
 let names = "Luis Alberto Goenaga Peláez";

@@ -1,6 +1,6 @@
 import React from "react";
 import logo from "../img/logo.png";
-import "../css/administracion.css";
+
 import BarraNavegacion from "../components/header";
 import Footer from "../components/footer";
 

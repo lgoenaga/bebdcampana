@@ -65,7 +65,7 @@ export function CrearRegistroCiudadano() {
 
   return (
     <>
-      <Container className="Formulaio-Contactos">
+      <Container className="Formulario-Contactos">
         <Container className="contenedor-datosPersonales ">
           <Form
             className="formDatosPersonales"

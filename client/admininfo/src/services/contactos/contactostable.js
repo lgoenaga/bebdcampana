@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { BsFillPenFill, BsFillTrashFill } from "react-icons/bs";
 import { deleteCiudadano } from "../../routes/contactos";
 
-import "../../css/registrociudadano.css";
+
 
 const TableContactos = (props) => {
   const { noReg, identification, firstName, firstSurname, dateBirth } =

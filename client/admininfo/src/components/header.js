@@ -10,7 +10,7 @@ import {
   MdSupervisorAccount,
 } from "react-icons/md";
 
-import "../css/header.css";
+
 
 let correo;
 

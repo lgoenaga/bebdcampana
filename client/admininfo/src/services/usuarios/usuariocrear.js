@@ -6,7 +6,7 @@ import Button from "react-bootstrap/Button";
 
 import Form from "react-bootstrap/Form";
 
-import "../../css/usuariocrear.css";
+
 import { createUsuario } from "../../routes/usuarios";
 
 export function CrearRegistroUsuario() {
