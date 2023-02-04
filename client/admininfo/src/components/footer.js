@@ -9,11 +9,9 @@ function Footer() {
     <>
       <footer className="footer-app">
        <nav className="navbar fixed-bottom">
-        <div className="container-fluid">
           <p>Pagina Elaborada por : {names}</p>
           <p>correo electronico : {correo}</p>
           <p>Todos los derechos reservados</p>
-        </div>
       </nav>
       </footer>
     </>

@@ -6,11 +6,9 @@ import Container from "react-bootstrap/Container";
 import Col from "react-bootstrap/Col";
 
 import logo from "../img/logo.png";
-
 import { getUsuario } from "../routes/login";
 
 function Login() {
-
   const navigate = useNavigate();
   const [validated, setValidated] = useState(false);
   const [valoresForm, setValoresForm] = useState({});
@@ -23,16 +21,14 @@ function Login() {
   };
 
   const mostrarusuario = async () => {
+    const { data } = await getUsuario(user);
 
-    const {data} = await getUsuario(user);
-
-      if (data.user === user) {
-        console.log("Usuario autorizado");
-        navigate("/inicio");
-      } else {
-        console.log("Datos no coinciden");
-      }
-
+    if (data.user === user) {
+      console.log("Usuario autorizado");
+      navigate("/inicio");
+    } else {
+      console.log("Datos no coinciden");
+    }
   };
 
   const handleOnSubmit = async (event) => {
@@ -41,12 +37,11 @@ function Login() {
     setValidated(true);
 
     await mostrarusuario();
-
   };
 
   return (
-    <Container>
-      <Col>
+    <Container className="login-form container-fluid">
+      <Col className="login-col">
         <Form className="FormLogin" noValidate validated={validated}>
           <Form.Group className="mb-3" controlId="formBasicUser">
             <Form.Label>Usuario</Form.Label>
@@ -86,14 +81,11 @@ function Login() {
           </Form.Group>
         </Form>
       </Col>
-      <Col>
+      <Col className="login-col">
         <img
           className="LogoLogin "
           src={logo}
           alt="Logo"
-          style={{
-            height: 200,
-          }}
         />
       </Col>
     </Container>

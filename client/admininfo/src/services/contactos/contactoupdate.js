@@ -206,7 +206,7 @@ export const UpdateCiudadano = () => {
           </Row>
         </Form>
       </Container>
-      <Container className="button">
+      <Container className="button-contactos">
         <Button variant="info" onClick={handleOnSubmit}>
           actualizar
         </Button>

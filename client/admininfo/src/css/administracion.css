@@ -1,4 +1,4 @@
-.contenedor {
+.contenedor-admin {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -7,20 +7,14 @@
 }
 
 @media (max-width: 793px) {
-  .contenedor img {
+  .contenedor-admin img {
     height: min-content;
     width: min-content;
   }
 }
 
 @media (max-height: 506px) {
-  .contenedor img {
+  .contenedor-admin img {
     height: 25vh;
-  }
-}
-
-@media (max-height: 355px) {
-  .contenedor-app {
-    height: 70vh;
   }
 }

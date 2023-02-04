@@ -8,7 +8,7 @@ const ViewAdministracion = () => {
   return (
     <>
       <BarraNavegacion />
-      <div className="contenedor">
+      <div className="contenedor-admin">
         <img className="BrandLogo " src={logo} alt="Logo" height="150" />
       </div>
       <Footer/>

@@ -2,7 +2,8 @@ import { useState, useEffect } from "react";
 import { listCiudadanos } from "../../routes/contactos";
 import TableContactos from "./contactostable";
 
-import "../../css/contactos.css";
+import "../../css/registrociudadano.css"
+
 
 export const ListCiudadanos = () => {
   const [ciudadanos, setCiudadanos] = useState([]);
@@ -31,15 +32,27 @@ export const ListCiudadanos = () => {
 
   return (
     <div>
-      <table className="table border-primary table-info table-hover table-striped">
+      <table className="table border-primary table-hover table-contactos">
         <thead className="table-group-divider">
-          <tr className="table-warning">
-            <th scope="col">#</th>
-            <th scope="col">Identificacion</th>
-            <th scope="col">Primer Nombre</th>
-            <th scope="col">Primer Apellido</th>
-            <th scope="col">Fecha Nacimiento</th>
-            <th scope="col">Acción</th>
+          <tr className="table-info">
+            <th scope="col" className="col-contactos">
+              #
+            </th>
+            <th scope="col" className="col-contactos">
+              Identificacion
+            </th>
+            <th scope="col" className="col-contactos">
+              Primer Nombre
+            </th>
+            <th scope="col" className="col-contactos">
+              Primer Apellido
+            </th>
+            <th scope="col" className="col-contactos">
+              Fecha Nacimiento
+            </th>
+            <th scope="col" className="col-contactos">
+              Acción
+            </th>
           </tr>
         </thead>
         <tbody className="table-group-divider">{DataTable()}</tbody>

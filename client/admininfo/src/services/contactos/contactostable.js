@@ -6,6 +6,8 @@ import { useNavigate } from "react-router-dom";
 import { BsFillPenFill, BsFillTrashFill } from "react-icons/bs";
 import { deleteCiudadano } from "../../routes/contactos";
 
+import "../../css/registrociudadano.css";
+
 const TableContactos = (props) => {
   const { noReg, identification, firstName, firstSurname, dateBirth } =
     props.obj;
@@ -28,18 +30,23 @@ const TableContactos = (props) => {
 
   return (
     <>
-      <tr>
-        <td>{noReg}</td>
-        <td>{identification}</td>
-        <td>{firstName}</td>
-        <td>{firstSurname}</td>
-        <td>{dateBirth}</td>
+      <tr className="fila-contactos">
+        <td className="dato-contacto">{noReg}</td>
+        <td className="dato-contacto">{identification}</td>
+        <td className="dato-contacto">{firstName}</td>
+        <td className="dato-contacto">{firstSurname}</td>
+        <td className="dato-contacto">{dateBirth}</td>
 
-        <td>
-          <Button variant="danger" onClick={borrarContacto}>
+        <td className="dato-contacto">
+          <Button
+            variant="danger"
+            onClick={borrarContacto}
+            className="botones-mod"
+          >
             <BsFillTrashFill />
           </Button>
           <Button
+            className="botones-mod"
             variant="info"
             onClick={() => navigate(`/contactos/${identification}`)}
           >

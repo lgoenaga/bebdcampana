@@ -6,7 +6,6 @@ import "../css/login.css";
 const ViewLogin = () => {
   return (
     <>
-      <h3>Vista de Login </h3>
       <Login />
       <Footer/>
     </>

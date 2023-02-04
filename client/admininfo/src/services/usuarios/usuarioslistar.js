@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { listUsuarios } from "../../routes/usuarios";
 
-import "../../css/contactos.css";
 import TableUsuarios from "./usuariostable";
 
 export const ListUsuarios = () => {
@@ -33,7 +32,7 @@ export const ListUsuarios = () => {
     <div>
       <table className="table border-primary  table-hover">
         <thead className="table-group-divider">
-          <tr className="table-warning">
+          <tr className="table-info">
             <th scope="col">#</th>
             <th scope="col">Usuario</th>
             <th scope="col">Rol</th>

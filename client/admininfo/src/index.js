@@ -7,6 +7,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.js";
 
 import "./index.css";
+import "./css/registrociudadano.css";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(

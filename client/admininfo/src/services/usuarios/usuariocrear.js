@@ -60,9 +60,9 @@ export function CrearRegistroUsuario() {
 
   return (
     <>
-      <Container className="contenedor-usuarios container">
+      <Container className="contenedor-usuarios container-fluid ">
         <Form noValidate validated={validated}>
-          <Form.Group className="mb-3" controlId="formBasicText">
+          <Form.Group className="mb-3" controlId="formBasicUser">
             <Form.Label>Usuario</Form.Label>
             <Form.Control
               type="text"
@@ -84,11 +84,12 @@ export function CrearRegistroUsuario() {
               onChange={(e) => handleOnChange(e)}
               required
             />
+            <Form.Text className="text-muted">
+              Never share your password with anyone.
+            </Form.Text>
           </Form.Group>
-          <Form.Text className="text-muted">
-            Never share your password with anyone.
-          </Form.Text>
-          <Form.Group className="mb-3" controlId="formBasicText">
+
+          <Form.Group className="mb-3" controlId="formBasicRol">
             <Form.Label>Rol</Form.Label>
             <Form.Control
               type="text"
@@ -99,7 +100,7 @@ export function CrearRegistroUsuario() {
               required
             />
           </Form.Group>
-          <Form.Group className="mb-3" controlId="formBasicText">
+          <Form.Group className="mb-3" controlId="formBasicEstado">
             <Form.Label>Estado</Form.Label>
             <Form.Control
               type="text"
@@ -111,10 +112,7 @@ export function CrearRegistroUsuario() {
             />
           </Form.Group>
           <Form.Group className="d-flex">
-            <Button
-              variant="primary"
-              onClick={handleOnSubmit}
-            >
+            <Button variant="primary" onClick={handleOnSubmit}>
               Enviar
             </Button>
           </Form.Group>

@@ -65,146 +65,153 @@ export function CrearRegistroCiudadano() {
 
   return (
     <>
-      <Container className="contenedor-datosPersonales">
-        <Form className="formDatosPersonales" noValidate validated={validated}>
-          <Form.Label>Datos Personales</Form.Label>
-          <Row className="mb-3">
-            <Form.Group as={Col} controlId="formGridCedula">
-              <Form.Label>Cédula</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Entrar Cédula"
-                name="identification"
-                value={identification}
-                onChange={(e) => handleOnChange(e)}
-                required
-              />
-              <Form.Control.Feedback type="invalid">
-                No puede estar vacio
-              </Form.Control.Feedback>
-            </Form.Group>
-            <Form.Group as={Col} controlId="formGridBirthDate">
-              <Form.Label>Fecha de Nacimiento</Form.Label>
-              <Form.Control
-                placeholder="Fecha de Nacimiento"
-                name="dateBirth"
-                type="date"
-                value={moment(dateBirth).format("DD-MMM-YYYY")}
-                onChange={(e) => handleOnChange(e)}
-              />
-            </Form.Group>
-          </Row>
-          <Row className="mb-3">
-            <Form.Group as={Col} controlId="formGridFirstName">
-              <Form.Label>Primer Nombre</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Primer Nombre"
-                name="firstName"
-                value={firstName}
-                onChange={(e) => handleOnChange(e)}
-                required
-              />
-              <Form.Control.Feedback type="invalid">
-                No puede estar vacio
-              </Form.Control.Feedback>
-            </Form.Group>
-            <Form.Group as={Col} controlId="formGridSecondName">
-              <Form.Label>Segundo Nombre</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Segundo Nombre"
-                name="secondName"
-                value={secondName}
-                onChange={(e) => handleOnChange(e)}
-              />
-            </Form.Group>
-          </Row>
-          <Row className="mb-3">
-            <Form.Group as={Col} controlId="formGridFisrtSurname">
-              <Form.Label>Primer Apellido</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Primer Apellido"
-                name="firstSurname"
-                value={firstSurname}
-                onChange={(e) => handleOnChange(e)}
-                required
-              />
-              <Form.Control.Feedback type="invalid">
-                No puede estar vacio
-              </Form.Control.Feedback>
-            </Form.Group>
+      <Container className="Formulaio-Contactos">
+        <Container className="contenedor-datosPersonales ">
+          <Form
+            className="formDatosPersonales"
+            noValidate
+            validated={validated}
+          >
+            <Form.Label>Datos Personales</Form.Label>
+            <Row className="mb-3 fila-data">
+              <Form.Group as={Col} controlId="formGridCedula">
+                <Form.Label>Cédula</Form.Label>
+                <Form.Control
+                  className="entrada-datos"
+                  type="text"
+                  placeholder="Entrar Cédula"
+                  name="identification"
+                  value={identification}
+                  onChange={(e) => handleOnChange(e)}
+                  required
+                />
+                <Form.Control.Feedback type="invalid">
+                  No puede estar vacio
+                </Form.Control.Feedback>
+              </Form.Group>
+              <Form.Group as={Col} controlId="formGridBirthDate">
+                <Form.Label>Fecha de Nacimiento</Form.Label>
+                <Form.Control
+                  placeholder="Fecha de Nacimiento"
+                  name="dateBirth"
+                  type="date"
+                  value={moment(dateBirth).format("DD-MMM-YYYY")}
+                  onChange={(e) => handleOnChange(e)}
+                />
+              </Form.Group>
+            </Row>
+            <Row className="mb-3 fila-data">
+              <Form.Group as={Col} controlId="formGridFirstName">
+                <Form.Label>Primer Nombre</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Primer Nombre"
+                  name="firstName"
+                  value={firstName}
+                  onChange={(e) => handleOnChange(e)}
+                  required
+                />
+                <Form.Control.Feedback type="invalid">
+                  No puede estar vacio
+                </Form.Control.Feedback>
+              </Form.Group>
+              <Form.Group as={Col} controlId="formGridSecondName">
+                <Form.Label>Segundo Nombre</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Segundo Nombre"
+                  name="secondName"
+                  value={secondName}
+                  onChange={(e) => handleOnChange(e)}
+                />
+              </Form.Group>
+            </Row>
+            <Row className="mb-3 fila-data">
+              <Form.Group as={Col} controlId="formGridFisrtSurname">
+                <Form.Label>Primer Apellido</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Primer Apellido"
+                  name="firstSurname"
+                  value={firstSurname}
+                  onChange={(e) => handleOnChange(e)}
+                  required
+                />
+                <Form.Control.Feedback type="invalid">
+                  No puede estar vacio
+                </Form.Control.Feedback>
+              </Form.Group>
 
-            <Form.Group as={Col} controlId="formGridSecondSurname">
-              <Form.Label>Segundo Apellido</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Segundo Apellido"
-                name="secondSurname"
-                value={secondSurname}
-                onChange={(e) => handleOnChange(e)}
-              />
-            </Form.Group>
-          </Row>
-        </Form>
+              <Form.Group as={Col} controlId="formGridSecondSurname">
+                <Form.Label>Segundo Apellido</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Segundo Apellido"
+                  name="secondSurname"
+                  value={secondSurname}
+                  onChange={(e) => handleOnChange(e)}
+                />
+              </Form.Group>
+            </Row>
+          </Form>
+        </Container>
+        <Container className="contenedorContactoUbicacion">
+          <Form className="formDatosContacto">
+            <Form.Label>Datos de Contacto</Form.Label>
+            <Row className="mb-3 fila-data">
+              <Form.Group as={Col} controlId="formGridCelular">
+                <Form.Label>Teléfono celular</Form.Label>
+                <Form.Control type="text" placeholder="Teléfono Celular" />
+              </Form.Group>
+              <Form.Group as={Col} controlId="formGridTelefono">
+                <Form.Label>Teléfono fijo</Form.Label>
+                <Form.Control type="text" placeholder="Teléfono fijo" />
+              </Form.Group>
+            </Row>
+            <Row className="mb-3 fila-data">
+              <Form.Group as={Col} controlId="formGridEmail">
+                <Form.Label>Correo electrónico</Form.Label>
+                <Form.Control type="text" placeholder="Correo electrónico" />
+              </Form.Group>
+            </Row>
+            <Row className="mb-3 fila-data">
+              <Form.Group as={Col} controlId="formGridFacebook">
+                <Form.Label>Facebook</Form.Label>
+                <Form.Control type="text" placeholder="Facebook" />
+              </Form.Group>
+              <Form.Group as={Col} controlId="formGridInstagram">
+                <Form.Label>Instagram</Form.Label>
+                <Form.Control type="text" placeholder="Instagram" />
+              </Form.Group>
+            </Row>
+          </Form>
+          <Form className="formDatosUbicacion">
+            <Form.Label>Datos de Ubicacion</Form.Label>
+            <Row className="mb-3 fila-data">
+              <Form.Group as={Col} controlId="formGridCelular">
+                <Form.Label>Dirección</Form.Label>
+                <Form.Control type="text" placeholder="Dirección" />
+              </Form.Group>
+            </Row>
+            <Row className="mb-3 fila-data">
+              <Form.Group as={Col} controlId="formGridTelefono">
+                <Form.Label>Barrio / Vereda</Form.Label>
+                <Form.Control type="text" placeholder="Barrio / Vereda" />
+              </Form.Group>
+            </Row>
+            <Row className="mb-3 fila-data">
+              <Form.Group as={Col} controlId="formGridEmail">
+                <Form.Label>Urbanización / otros datos de ubicación</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Urbanización / otros datos de ubicación"
+                />
+              </Form.Group>
+            </Row>
+          </Form>
+        </Container>
       </Container>
-      <Container className="contenedorContactoUbicacion">
-        <Form className="formDatosContacto">
-          <Form.Label>Datos de Contacto</Form.Label>
-          <Row className="mb-3">
-            <Form.Group as={Col} controlId="formGridCelular">
-              <Form.Label>Teléfono celular</Form.Label>
-              <Form.Control type="text" placeholder="Teléfono Celular" />
-            </Form.Group>
-            <Form.Group as={Col} controlId="formGridTelefono">
-              <Form.Label>Teléfono fijo</Form.Label>
-              <Form.Control type="text" placeholder="Teléfono fijo" />
-            </Form.Group>
-          </Row>
-          <Row className="mb-3">
-            <Form.Group as={Col} controlId="formGridEmail">
-              <Form.Label>Correo electrónico</Form.Label>
-              <Form.Control type="text" placeholder="Correo electrónico" />
-            </Form.Group>
-          </Row>
-          <Row className="mb-3">
-            <Form.Group as={Col} controlId="formGridFacebook">
-              <Form.Label>Facebook</Form.Label>
-              <Form.Control type="text" placeholder="Facebook" />
-            </Form.Group>
-            <Form.Group as={Col} controlId="formGridInstagram">
-              <Form.Label>Instagram</Form.Label>
-              <Form.Control type="text" placeholder="Instagram" />
-            </Form.Group>
-          </Row>
-        </Form>
-        <Form className="formDatosUbicacion">
-          <Form.Label>Datos de Ubicacion</Form.Label>
-          <Row className="mb-3">
-            <Form.Group as={Col} controlId="formGridCelular">
-              <Form.Label>Dirección</Form.Label>
-              <Form.Control type="text" placeholder="Dirección" />
-            </Form.Group>
-          </Row>
-          <Row className="mb-3">
-            <Form.Group as={Col} controlId="formGridTelefono">
-              <Form.Label>Barrio / Vereda</Form.Label>
-              <Form.Control type="text" placeholder="Barrio / Vereda" />
-            </Form.Group>
-          </Row>
-          <Row className="mb-3">
-            <Form.Group as={Col} controlId="formGridEmail">
-              <Form.Label>Urbanización / otros datos de ubicación</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Urbanización / otros datos de ubicación"
-              />
-            </Form.Group>
-          </Row>
-        </Form>
-      </Container>
-      <Container className="button">
+      <Container className="button-contactos">
         <Button variant="primary" onClick={handleOnSubmit}>
           Guardar
         </Button>

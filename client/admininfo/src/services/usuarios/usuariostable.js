@@ -28,17 +28,22 @@ const TableUsuarios = (props) => {
 
   return (
     <>
-      <tr>
-        <td>{noReg}</td>
-        <td>{user}</td>
-        <td>{rol}</td>
-        <td>{estado}</td>
+      <tr className="fila-contactos">
+        <td className="dato-contacto">{noReg}</td>
+        <td className="dato-contacto">{user}</td>
+        <td className="dato-contacto">{rol}</td>
+        <td className="dato-contacto">{estado}</td>
 
-        <td>
-          <Button variant="danger" onClick={borrarUsuario}>
+        <td className="dato-contacto">
+          <Button
+            variant="danger"
+            onClick={borrarUsuario}
+            className="botones-mod"
+          >
             <BsFillTrashFill />
           </Button>
           <Button
+            className="botones-mod"
             variant="info"
             onClick={() => navigate(`/usuarios/${user}`)}
           >

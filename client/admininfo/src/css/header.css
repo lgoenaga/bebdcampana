@@ -1,15 +1,3 @@
-#root {
-  font-size: small;
-}
-
-html {
-  height: 99vh;
-  width: 99vw;
-}
-body {
-  min-height: 99vh;
-  min-width: 99vw;
-}
 
 .row-one {
   display: flex;
@@ -55,23 +43,5 @@ body {
   }
   a.nav-link {
     padding: 2px;
-  }
-}
-
-@media (max-width: 791px) {
-  .contenedor {
-    height: 70vh;
-  }
-}
-
-@media (max-width: 506px) {
-  .contenedor {
-    height: 67vh;
-  }
-}
-
-@media (max-height: 450px) {
-  .contenedor {
-    height: 27vh;
   }
 }

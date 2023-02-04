@@ -83,7 +83,7 @@ export const UpdateRegistroUsuario = () => {
 
   return (
     <>
-      <Container className="contenedor-usuarios container">
+      <Container className="contenedor-usuarios container-fluid">
         <Form noValidate validated={validated}>
           <Form.Group className="mb-3" controlId="formBasicText">
             <Form.Label>Usuario</Form.Label>

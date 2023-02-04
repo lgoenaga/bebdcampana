@@ -1,95 +1,103 @@
-* {
-  font-size: small;
-}
-
-.container {
-  display: flex;
-}
-
-Form {
+.contenedor-datosPersonales {
   padding: 5px;
   margin: 5px;
   border: solid 1px;
   border-radius: 20px;
-}
-
-.formDatosPersonales {
   width: 99%;
   min-height: max-content;
   max-height: min-content;
+  margin: 0 auto;
+}
+
+.contenedorContactoUbicacion {
+  display: flex;
+  border: solid 1px;
+  border-radius: 20px;
+  margin: 5px;
+  margin: 0 auto;
 }
 
 .formDatosContacto {
   width: 49%;
   min-height: max-content;
   max-height: min-content;
+  border-right: 1px solid;
+  padding-right: 10px;
 }
 
 .formDatosUbicacion {
   width: 49%;
   min-height: max-content;
   max-height: min-content;
+  padding-left: 10px;
 }
 
-.button {
+.button-contactos {
+  display: flex;
   justify-content: center;
-  margin-bottom: 5px;
+  margin: 0 auto;
+  padding-top: 10px;
 }
 
-input {
-  height: 20px;
+.fila-contactos .dato-contacto {
+  text-align: center;
+
+  padding-top: 1px;
+  padding-bottom: 1px;
 }
 
-@media (max-width: 992px) {
-  html {
-    height: 50%;
+.botones-mod {
+  margin-right: 3px;
+  text-align: center;
+}
+
+@media (max-width: 794px) {
+  .Formulaio-Contactos {
+    font-size: xx-small;
   }
-}
 
-@media (max-width: 768px) {
-  .contenedorContactoUbicacion {
+  .form-control {
+    height: 10px;
+    font-size: xx-small;
+    padding: 0;
+    margin: 0;
+  }
+  .form-label {
+    margin: 0;
+    font-size: xx-small;
+    padding: 0;
+  }
+
+  .fixed-bottom p {
     display: flex;
-    flex-direction: column;
-  }
-
-  .formDatosPersonales {
-    width: 33vw;
-    height: min-content;
-  }
-  .formDatosContacto {
-    width: 33vw;
-    height: min-content;
-  }
-
-  .formDatosUbicacion {
-    width: 33vw;
-    height: min-content;
+    justify-content: space-between;
   }
 }
 
-@media (max-width: 585px) {
-  .contenedorContactoUbicacion {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+@media (max-width: 990px) {
+  .Formulaio-Contactos {
+    font-size: xx-small;
+    margin-top: 0;
   }
 
-  .contenedor-datosPersonales {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
-  .formDatosPersonales {
-    width: 430px;
+  .fila-data {
+    height: 35px;
+    margin: 0;
+    padding: 0;
   }
 
-  .formDatosContacto {
-    width: 430px;
+  .fixed-bottom p {
+    font-size: x-small;
+  }
+}
+
+@media (min-width: 991px) {
+  .Formulaio-Contactos {
+    margin-top: 10px;
   }
 
-  .formDatosUbicacion {
-    width: 430px;
+  .fixed-bottom {
+    display: grid;
+    align-content: space-between;
   }
 }
