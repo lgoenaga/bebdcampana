@@ -1,7 +1,8 @@
 const { Router } = require("express");
 const Contacto = require("../models/contacto");
 const moment = require("moment");
-const { default: mongoose } = require("mongoose");
+const { checkValidateContacto } = require("../helpers/validatecontacto");
+const { validationResult } = require("express-validator");
 
 const router = Router();
 
@@ -29,7 +30,14 @@ router.get("/:documentoId", async function (req, res) {
   }
 });
 
-router.post("/crear", async function (req, res) {
+router.post("/crear", checkValidateContacto(), async function (req, res) {
+  let errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    console.log(errors.array());
+    return res.status(422).json({ errors: errors.array() });
+  }
+
   try {
     const existCiudadano = await Contacto.findOne({
       identification: req.body.identification,
@@ -47,22 +55,26 @@ router.post("/crear", async function (req, res) {
     ciudadano.firstSurname = req.body.firstSurname;
     ciudadano.secondSurname = req.body.secondSurname;
     ciudadano.dateBirth = moment(req.body.dateBirth).format("YYYY-MM-DD");
-    ciudadano.dateCreation = moment(new Date()).format(
-      "YYYY-MM-DD h:mm:ss A"
-    );
+    ciudadano.dateCreation = moment(new Date()).format("YYYY-MM-DD h:mm:ss A");
     ciudadano.dateUpdate = moment(new Date()).format("YYYY-MM-DD h:mm:ss A");
 
     ciudadano = await ciudadano.save();
 
     res.status(200).send(ciudadano);
-
   } catch (error) {
     console.log("El registro no se efectuo ", error);
     res.status(500).send("El registro no se efectuo ");
   }
 });
 
-router.put("/:documentoId", async function (req, res) {
+router.put("/:documentoId", checkValidateContacto(), async function (req, res) {
+  let errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    console.log(errors.array());
+    return res.status(422).json({ errors: errors.array() });
+  }
+
   try {
     let ciudadano = await Contacto.findOne({
       identification: req.params.documentoId,

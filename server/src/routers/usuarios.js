@@ -3,8 +3,17 @@ const Usuario = require("../models/usuarios");
 const router = Router();
 const moment = require("moment");
 const encrypt = require("bcryptjs");
+const { checkValidateUser } = require("../helpers/validateuser");
+const { validationResult } = require("express-validator");
 
-router.post("/crear", async function (req, res) {
+router.post("/crear", checkValidateUser(), async function (req, res) {
+  let errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    console.log(errors.array());
+    return res.status(422).json({ errors: errors.array() });
+  }
+
   try {
     const existUser = await Usuario.findOne({ user: req.body.user });
     if (existUser) {
@@ -13,13 +22,13 @@ router.post("/crear", async function (req, res) {
 
     let usuario = Usuario();
 
-        if (req.body.password != "") {
-          const salt = encrypt.genSaltSync();
-          const password = encrypt.hashSync(req.body.password, salt);
-          usuario.password = password;
-        } else {
-          return res.status(401).send("Password requrida");
-        }
+    if (req.body.password != "") {
+      const salt = encrypt.genSaltSync();
+      const password = encrypt.hashSync(req.body.password, salt);
+      usuario.password = password;
+    } else {
+      return res.status(401).send("Password requrida");
+    }
 
     usuario.user = req.body.user;
     usuario.rol = req.body.rol;
@@ -65,7 +74,14 @@ router.get("/:userLogin", async function (req, res) {
   }
 });
 
-router.put("/:userLogin", async function (req, res) {
+router.put("/:userLogin", checkValidateUser(), async function (req, res) {
+  let errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    console.log(errors.array());
+    return res.status(422).json({ errors: errors.array() });
+  }
+
   try {
     let usuario = await Usuario.findOne({
       user: req.params.userLogin,
@@ -73,14 +89,14 @@ router.put("/:userLogin", async function (req, res) {
 
     if (!usuario) return res.status(404).send("Usuario no se encuentra");
 
-    if (req.body.password!=""){
+    if (req.body.password != "") {
       const salt = encrypt.genSaltSync();
       const password = encrypt.hashSync(req.body.password, salt);
       usuario.password = password;
-    }else{
-      return res.status(401).send('Password requrida');
+    } else {
+      return res.status(401).send("Password requrida");
     }
-    
+
     usuario.rol = req.body.rol;
     usuario.estado = req.body.estado;
     usuario.dateUpdate = moment(new Date()).format("YYYY-MM-DD h:mm:ss A");
