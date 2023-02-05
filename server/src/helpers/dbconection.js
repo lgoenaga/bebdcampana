@@ -6,7 +6,9 @@ const db_pwd = process.env.USER_PWD;
 const db_name = process.env.DB_MONGODB;
 
 const getConection = async () => {
-  const uri = `mongodb+srv://${db_user}:${db_pwd}@informatiostore.mbrxfyk.mongodb.net/${db_name}`;
+  //const uri = `mongodb+srv://${db_user}:${db_pwd}@informatiostore.mbrxfyk.mongodb.net/${db_name}`;
+  const uri = `mongodb+srv://${db_user}:${db_pwd}@informatiostore.mbrxfyk.mongodb.net/${db_name}?ssl=true&replicaSet=atlas-vjhget-shard-0&authSource=admin&retryWrites=true&w=majority`;
+  //const uri = `mongodb://${db_user}:${db_pwd}@ac-sfp3nqu-shard-00-00.mbrxfyk.mongodb.net:27017,ac-sfp3nqu-shard-00-01.mbrxfyk.mongodb.net:27017,ac-sfp3nqu-shard-00-02.mbrxfyk.mongodb.net:27017/${db_name}?ssl=true&replicaSet=atlas-vjhget-shard-0&authSource=admin&retryWrites=true&w=majority`;
 
   mongoose.set("strictQuery", false);
   await mongoose
