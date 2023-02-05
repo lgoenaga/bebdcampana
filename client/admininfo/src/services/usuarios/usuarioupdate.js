@@ -41,7 +41,7 @@ export const UpdateRegistroUsuario = () => {
   useEffect(() => {
     setValoresForm({
       user: usuario.user,
-      password: usuario.password,
+      password: "",
       rol: usuario.rol,
       estado: usuario.estado,
     });
@@ -84,7 +84,11 @@ export const UpdateRegistroUsuario = () => {
   return (
     <>
       <Container className="contenedor-usuarios container-fluid">
-        <Form noValidate validated={validated}>
+        <Form
+          noValidate
+          validated={validated}
+          onSubmit={(e) => handleOnSubmit(e)}
+        >
           <Form.Group className="mb-3" controlId="formBasicText">
             <Form.Label>Usuario</Form.Label>
             <Form.Control
@@ -104,6 +108,7 @@ export const UpdateRegistroUsuario = () => {
               placeholder="Password"
               name="password"
               value={password}
+              minLength="6"
               onChange={(e) => handleOnChange(e)}
               required
             />
@@ -134,7 +139,7 @@ export const UpdateRegistroUsuario = () => {
             />
           </Form.Group>
           <Form.Group className="d-flex">
-            <Button variant="primary" onClick={handleOnSubmit}>
+            <Button variant="primary" onClick={(e) => handleOnSubmit(e)}>
               Actualizar
             </Button>
           </Form.Group>

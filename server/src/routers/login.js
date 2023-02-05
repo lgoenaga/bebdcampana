@@ -1,6 +1,7 @@
 const Router = require("express");
 const Usuario = require("../models/usuarios");
 const router = Router();
+const encrypt = require("bcryptjs");
 
 /*router.get("/", async function (req, res) {
   try {
@@ -35,7 +36,9 @@ router.post("/", async function (req, res) {
       return res.status(401).json({ mensaje: "Información Incorrecta" });
     }
 
-    if (usuario.password != req.body.password) {
+    const pwd = encrypt.compareSync(req.body.password, usuario.password);
+
+    if (!pwd) {
       console.log("Información Incorrecta");
       return res.status(402).json({ mensaje: "Información Incorrecta" });
     }

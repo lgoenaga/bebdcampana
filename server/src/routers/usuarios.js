@@ -2,6 +2,7 @@ const Router = require("express");
 const Usuario = require("../models/usuarios");
 const router = Router();
 const moment = require("moment");
+const encrypt = require("bcryptjs");
 
 router.post("/crear", async function (req, res) {
   try {
@@ -12,8 +13,15 @@ router.post("/crear", async function (req, res) {
 
     let usuario = Usuario();
 
+        if (req.body.password != "") {
+          const salt = encrypt.genSaltSync();
+          const password = encrypt.hashSync(req.body.password, salt);
+          usuario.password = password;
+        } else {
+          return res.status(401).send("Password requrida");
+        }
+
     usuario.user = req.body.user;
-    usuario.password = req.body.password;
     usuario.rol = req.body.rol;
     usuario.estado = req.body.estado;
     usuario.dateCreation = moment(new Date()).format("YYYY-MM-DD h:mm:ss A");
@@ -33,7 +41,7 @@ router.post("/crear", async function (req, res) {
 router.get("/", async function (req, res) {
   try {
     const usuarios = await Usuario.find();
-   
+
     return res.status(200).send(usuarios);
   } catch (error) {
     console.log("Usuarios no se han podido listar ", error);
@@ -65,14 +73,21 @@ router.put("/:userLogin", async function (req, res) {
 
     if (!usuario) return res.status(404).send("Usuario no se encuentra");
 
-    usuario.password = req.body.password;
+    if (req.body.password!=""){
+      const salt = encrypt.genSaltSync();
+      const password = encrypt.hashSync(req.body.password, salt);
+      usuario.password = password;
+    }else{
+      return res.status(401).send('Password requrida');
+    }
+    
     usuario.rol = req.body.rol;
     usuario.estado = req.body.estado;
-    usuario.dateUpdate = new Date();
+    usuario.dateUpdate = moment(new Date()).format("YYYY-MM-DD h:mm:ss A");
 
     usuario = await usuario.save();
 
-    res.status(200).send(usuario);
+    return res.status(200).send(usuario);
   } catch (error) {
     res.status(500).send("Ocurrio un error al tratar de actualizar el usuario");
   }
