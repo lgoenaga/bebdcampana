@@ -17,9 +17,9 @@ import ViewLogin from "./views/login";
 
 const Rutas = () => {
   return (
-    <div className="container-app">
+    <div className="container-app noMostrarRutas">
       <Routes>
-        <Route exact path="/" element={<ViewAdministracion />} />
+        <Route exact path="/" element={<ViewLogin />} />
         <Route
           exact
           path="/contactos/crear"
