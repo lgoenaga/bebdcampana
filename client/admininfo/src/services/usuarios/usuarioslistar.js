@@ -6,9 +6,21 @@ import TableUsuarios from "./usuariostable";
 export const ListUsuarios = () => {
   const [usuarios, setUsuarios] = useState([]);
 
+  let _header = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+
+  let tokenAuthorization = localStorage.getItem("Authorization");
+
+  if (tokenAuthorization) {
+    _header.headers["Authorization"] = tokenAuthorization;
+  }
+
   const mostrarUsuarios = async () => {
     try {
-      const { data } = await listUsuarios();
+      const { data } = await listUsuarios(_header);
       setUsuarios(data);
     } catch (error) {
       console.log("Error desde el servidor verificar backend ", error);
@@ -17,7 +29,7 @@ export const ListUsuarios = () => {
 
   useEffect(() => {
     mostrarUsuarios();
-  }, []);
+  });
 
   const DataTable = () => {
     let noReg = 1;

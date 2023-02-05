@@ -6,7 +6,7 @@ const { validationResult } = require("express-validator");
 
 const router = Router();
 
-router.get("/", async function (req, res) {
+router.get("/", [validateJWT], async function (req, res) {
   try {
     const ciudadanos = await Contacto.find();
     res.send(ciudadanos);

@@ -5,6 +5,7 @@ const moment = require("moment");
 const encrypt = require("bcryptjs");
 const { checkValidateUser } = require("../helpers/validateuser");
 const { validationResult } = require("express-validator");
+const {validateJWT} = require("../middlewares/validatetoken");
 
 router.post("/crear", checkValidateUser(), async function (req, res) {
   let errors = validationResult(req);
@@ -47,7 +48,7 @@ router.post("/crear", checkValidateUser(), async function (req, res) {
   }
 });
 
-router.get("/", async function (req, res) {
+router.get("/", [validateJWT], async function (req, res) {
   try {
     const usuarios = await Usuario.find();
 

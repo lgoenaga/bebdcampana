@@ -8,9 +8,22 @@ import "../../css/registrociudadano.css"
 export const ListCiudadanos = () => {
   const [ciudadanos, setCiudadanos] = useState([]);
 
+    let _header = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+
+    let tokenAuthorization = localStorage.getItem("Authorization");
+
+    if (tokenAuthorization) {
+      _header.headers["Authorization"] = tokenAuthorization;
+    }
+
+
   const mostrarCiudadanos = async () => {
     try {
-      const { data } = await listCiudadanos();
+      const { data } = await listCiudadanos(_header);
       setCiudadanos(data);
     } catch (error) {
       console.log("Error desde el servidor verificar backend ", error);
@@ -19,7 +32,7 @@ export const ListCiudadanos = () => {
 
   useEffect(() => {
     mostrarCiudadanos();
-  }, []);
+  });
 
   const DataTable = () => {
     let noReg = 1;

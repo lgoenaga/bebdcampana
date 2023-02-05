@@ -1,7 +1,10 @@
 import { Axios } from "../helpers/axios.config";
 
-export const listUsuarios= () => {
-  return Axios.get("usuarios");
+
+
+export const listUsuarios = (_header) => {
+ 
+  return Axios.get("usuarios", _header);
 };
 
 export const createUsuario = (data) => {
