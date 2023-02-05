@@ -2,7 +2,7 @@ const { check } = require("express-validator");
 
 const checkValidateContacto = () => {
   return [
-    check("useridentification")
+    check("identification")
       .notEmpty()
       .withMessage("La identificacion no puede estar vacio"),
     check("firstName")
