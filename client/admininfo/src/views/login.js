@@ -7,7 +7,7 @@ const ViewLogin = () => {
   return (
     <>
       <Login />
-      <Footer/>
+      <Footer />
     </>
   );
 };

@@ -6,7 +6,7 @@ import Container from "react-bootstrap/Container";
 import Col from "react-bootstrap/Col";
 
 import logo from "../img/logo.png";
-import { getUsuario } from "../routes/login";
+import { valiteUser } from "../routes/login";
 
 function Login() {
   const navigate = useNavigate();
@@ -20,29 +20,34 @@ function Login() {
     setValoresForm({ ...valoresForm, [name]: value });
   };
 
-  const mostrarusuario = async () => {
-    const { data } = await getUsuario(user);
-
-    if (data.user === user) {
+  const validarUsuario =  async () => {
+    const { data } = await valiteUser(valoresForm);
+    if (data) {
       console.log("Usuario autorizado");
       navigate("/inicio");
+  
     } else {
       console.log("Datos no coinciden");
     }
   };
 
-  const handleOnSubmit = async (event) => {
+  const handleOnSubmit = (event) => {
     event.preventDefault();
 
     setValidated(true);
 
-    await mostrarusuario();
+     validarUsuario();
   };
 
   return (
     <Container className="login-form container-fluid">
       <Col className="login-col">
-        <Form className="FormLogin" noValidate validated={validated}>
+        <Form
+          className="FormLogin"
+          noValidate
+          validated={validated}
+          onSubmit={(e) => handleOnSubmit(e)}
+        >
           <Form.Group className="mb-3" controlId="formBasicUser">
             <Form.Label>Usuario</Form.Label>
             <Form.Control
@@ -74,7 +79,8 @@ function Login() {
             <Button
               variant="primary"
               className="boton"
-              onClick={handleOnSubmit}
+              type="submit"
+              onClick={(e) => handleOnSubmit(e)}
             >
               Enviar
             </Button>
@@ -82,11 +88,7 @@ function Login() {
         </Form>
       </Col>
       <Col className="login-col">
-        <img
-          className="LogoLogin "
-          src={logo}
-          alt="Logo"
-        />
+        <img className="LogoLogin " src={logo} alt="Logo" />
       </Col>
     </Container>
   );

@@ -22,6 +22,7 @@ app.use(
 
 app.use("/contactos", require("./routers/contactos"));
 app.use("/usuarios", require("./routers/usuarios"));
+app.use("/login", require ("./routers/login"));
 
 
 app.get("/api", (req, res) => {

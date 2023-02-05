@@ -7,3 +7,7 @@ export const listUsuarios= () => {
 export const getUsuario = (user) => {
   return Axios.get(`usuarios/${user}`);
 };
+
+export const valiteUser = (data) =>{
+  return Axios.post("login", data);
+}
