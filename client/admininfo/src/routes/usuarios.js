@@ -7,18 +7,18 @@ export const listUsuarios = (_header) => {
   return Axios.get("usuarios", _header);
 };
 
-export const createUsuario = (data) => {
-  return Axios.post("usuarios/crear", data);
+export const createUsuario = (data, _header) => {
+  return Axios.post("usuarios/crear", data, _header);
 };
 
-export const deleteUsuario = (user) => {
-  return Axios.delete(`usuarios/${user}`);
+export const deleteUsuario = (user, _header) => {
+  return Axios.delete(`usuarios/${user}`, _header);
 };
 
 export const updateUsuario = (userLogin, data) => {
   return Axios.put(`usuarios/${userLogin}`, data);
 };
 
-export const getUsuario = (user) => {
-  return Axios.get(`usuarios/${user}`);
+export const getUsuario = (user, _header) => {
+  return Axios.get(`usuarios/${user}`, _header);
 };

@@ -15,6 +15,24 @@ export function CrearRegistroUsuario() {
 
   const [valoresForm, setValoresForm] = useState({});
 
+    let _header = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+
+    try {
+        let tokenAuthorization = localStorage.getItem("Authorization");
+
+        if (tokenAuthorization) {
+          _header.headers["Authorization"] = tokenAuthorization;
+        } 
+      
+    } catch (error) {
+      console.log("Acceso restringido");
+    }
+  
+
   const {
     user = "",
     password = "",
@@ -48,7 +66,7 @@ export function CrearRegistroUsuario() {
     };
 
     try {
-      data = await createUsuario(usuario);
+      data = await createUsuario(usuario, _header);
 
       console.log("Usuario creado");
       console.log(data);

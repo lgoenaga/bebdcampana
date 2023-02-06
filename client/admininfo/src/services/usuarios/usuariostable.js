@@ -7,19 +7,27 @@ import { BsFillPenFill, BsFillTrashFill } from "react-icons/bs";
 import { deleteUsuario } from "../../routes/usuarios";
 
 const TableUsuarios = (props) => {
-  const { noReg, user, rol, estado } =
-    props.obj;
+  const { noReg, user, rol, estado} = props.obj;
 
   const navigate = useNavigate();
 
   const borrarUsuario = async () => {
-    let data = "";
+  
 
     try {
-      data = await deleteUsuario(user);
+       let _header = {
+         headers: {
+           "Content-Type": "application/json",
+         },
+       };
 
+       let tokenAuthorization = localStorage.getItem("Authorization");
+
+       if (tokenAuthorization) {
+         _header.headers["Authorization"] = tokenAuthorization;
+       }
+      await deleteUsuario(user, _header);
       console.log("Usuario Eliminado");
-      console.log(data);
       window.location.reload();
     } catch (error) {
       console.log("Usuario no se ha podido eliminar", error);

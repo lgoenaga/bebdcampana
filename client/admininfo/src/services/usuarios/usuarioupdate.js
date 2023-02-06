@@ -6,31 +6,36 @@ import Button from "react-bootstrap/Button";
 
 import Form from "react-bootstrap/Form";
 
-
 import { updateUsuario, getUsuario } from "../../routes/usuarios";
 
 export const UpdateRegistroUsuario = () => {
   const navigate = useNavigate();
-   const [validated, setValidated] = useState(false);
+  const [validated, setValidated] = useState(false);
   const { userLogin } = useParams();
 
   const [valoresForm, setValoresForm] = useState({});
 
   const [usuario, setUsuario] = useState({});
 
-  const {
-    user = "",
-    password = "",
-    rol = "",
-    estado = "",
-  } = valoresForm;
+  const { user = "", password = "", rol = "", estado = "" } = valoresForm;
 
   useEffect(() => {
     const mostrarusuario = async () => {
+      let _header = {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
+
+      let tokenAuthorization = localStorage.getItem("Authorization");
+
+      if (tokenAuthorization) {
+        _header.headers["Authorization"] = tokenAuthorization;
+      }
+
       try {
-        const { data } = await getUsuario(userLogin);
+        const { data } = await getUsuario(userLogin, _header);
         setUsuario(data);
-        
       } catch (error) {
         console.log("Usuario no existe");
       }
@@ -147,4 +152,4 @@ export const UpdateRegistroUsuario = () => {
       </Container>
     </>
   );
-}
+};

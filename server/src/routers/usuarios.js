@@ -7,48 +7,54 @@ const { checkValidateUser } = require("../helpers/validateuser");
 const { validationResult } = require("express-validator");
 const {validateJWT} = require("../middlewares/validatetoken");
 
-router.post("/crear", checkValidateUser(), async function (req, res) {
-  let errors = validationResult(req);
 
-  if (!errors.isEmpty()) {
-    console.log(errors.array());
-    return res.status(422).json({ errors: errors.array() });
-  }
 
-  try {
-    const existUser = await Usuario.findOne({ user: req.body.user });
-    if (existUser) {
-      return res.status(409).send("El usuario ya existe");
+router.post(
+  "/crear",
+  [checkValidateUser(), validateJWT],
+  async function (req, res) {
+    let errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      console.log(errors.array());
+      return res.status(422).json({ errors: errors.array() });
     }
 
-    let usuario = Usuario();
+    try {
+      const existUser = await Usuario.findOne({ user: req.body.user });
+      if (existUser) {
+        return res.status(409).send("El usuario ya existe");
+      }
 
-    if (req.body.password != "") {
-      const salt = encrypt.genSaltSync();
-      const password = encrypt.hashSync(req.body.password, salt);
-      usuario.password = password;
-    } else {
-      return res.status(401).send("Password requrida");
+      let usuario = Usuario();
+
+      if (req.body.password != "") {
+        const salt = encrypt.genSaltSync();
+        const password = encrypt.hashSync(req.body.password, salt);
+        usuario.password = password;
+      } else {
+        return res.status(401).send("Password requrida");
+      }
+
+      usuario.user = req.body.user;
+      usuario.rol = req.body.rol;
+      usuario.estado = req.body.estado;
+      usuario.dateCreation = moment(new Date()).format("YYYY-MM-DD h:mm:ss A");
+      usuario.dateUpdate = moment(new Date()).format("YYYY-MM-DD h:mm:ss A");
+
+      usuario = await usuario.save();
+
+      console.log("Usuario creado correctamente");
+      console.log(usuario);
+      return res.status(200).send(usuario);
+    } catch (error) {
+      console.log("Usuario no se ha podido crear ", error);
+      return res.status(500).send("Usuario no se ha podido crear ");
     }
-
-    usuario.user = req.body.user;
-    usuario.rol = req.body.rol;
-    usuario.estado = req.body.estado;
-    usuario.dateCreation = moment(new Date()).format("YYYY-MM-DD h:mm:ss A");
-    usuario.dateUpdate = moment(new Date()).format("YYYY-MM-DD h:mm:ss A");
-
-    usuario = await usuario.save();
-
-    console.log("Usuario creado correctamente");
-    console.log(usuario);
-    return res.status(200).send(usuario);
-  } catch (error) {
-    console.log("Usuario no se ha podido crear ", error);
-    return res.status(500).send("Usuario no se ha podido crear ");
   }
-});
+);
 
-router.get("/", [validateJWT], async function (req, res) {
+router.get("/", validateJWT, async function (req, res) {
   try {
     const usuarios = await Usuario.find();
 
@@ -59,7 +65,7 @@ router.get("/", [validateJWT], async function (req, res) {
   }
 });
 
-router.get("/:userLogin", async function (req, res) {
+router.get("/:userLogin", validateJWT, async function (req, res) {
   try {
     const usuario = await Usuario.findOne({
       user: req.params.userLogin,
@@ -110,7 +116,7 @@ router.put("/:userLogin", checkValidateUser(), async function (req, res) {
   }
 });
 
-router.delete("/:userLogin", async function (req, res) {
+router.delete("/:userLogin", validateJWT, async function (req, res) {
   try {
     let usuario = await Usuario.findOneAndDelete({
       user: req.params.userLogin,

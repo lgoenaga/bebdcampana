@@ -3,6 +3,7 @@ const Contacto = require("../models/contacto");
 const moment = require("moment");
 const { checkValidateContacto } = require("../helpers/validatecontacto");
 const { validationResult } = require("express-validator");
+const { validateJWT } = require("../middlewares/validatetoken");
 
 const router = Router();
 
