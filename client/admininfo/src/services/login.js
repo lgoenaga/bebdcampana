@@ -12,6 +12,7 @@ function Login() {
   const navigate = useNavigate();
   const [validated, setValidated] = useState(false);
   const [valoresForm, setValoresForm] = useState({});
+  localStorage.clear();
 
   const { user = "", password = "" } = valoresForm;
 
