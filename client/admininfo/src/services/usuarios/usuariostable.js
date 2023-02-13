@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 import { BsFillPenFill, BsFillTrashFill } from "react-icons/bs";
 import { deleteUsuario } from "../../routes/usuarios";
+import { AuthHeaders } from "../../components/authheader";
 
 const TableUsuarios = (props) => {
   const { noReg, user, rol, estado} = props.obj;
@@ -15,18 +16,8 @@ const TableUsuarios = (props) => {
   
 
     try {
-       let _header = {
-         headers: {
-           "Content-Type": "application/json",
-         },
-       };
-
-       let tokenAuthorization = localStorage.getItem("Authorization");
-
-       if (tokenAuthorization) {
-         _header.headers["Authorization"] = tokenAuthorization;
-       }
-      await deleteUsuario(user, _header);
+      const authheader = AuthHeaders();
+      await deleteUsuario(user, authheader);
       console.log("Usuario Eliminado");
       window.location.reload();
     } catch (error) {

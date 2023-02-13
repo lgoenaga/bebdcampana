@@ -10,8 +10,6 @@ import {
   MdSupervisorAccount,
 } from "react-icons/md";
 
-
-
 let correo;
 
 correo = "luisgoenagap@gmail.com";

@@ -5,36 +5,36 @@ const moment = require("moment");
 const encrypt = require("bcryptjs");
 const { checkValidateUser } = require("../helpers/validateuser");
 const { validationResult } = require("express-validator");
-const {validateJWT} = require("../middlewares/validatetoken");
-
-
+const { validateJWT } = require("../middlewares/validatetoken");
+const usuarios = require("../models/usuarios");
 
 router.post(
   "/crear",
   [checkValidateUser(), validateJWT],
   async function (req, res) {
+    console.clear();
     let errors = validationResult(req);
 
     if (!errors.isEmpty()) {
-      console.log(errors.array());
-      return res.status(422).json({ errors: errors.array() });
+      console.warn("Error en las validaciones \n", errors.array());
+      return res.status(422).json({
+        message: "Error en las validaciones",
+        errors: errors.array(),
+      });
     }
 
     try {
       const existUser = await Usuario.findOne({ user: req.body.user });
       if (existUser) {
+        console.warn("El usuario ya existe");
         return res.status(409).send("El usuario ya existe");
       }
 
       let usuario = Usuario();
 
-      if (req.body.password != "") {
-        const salt = encrypt.genSaltSync();
-        const password = encrypt.hashSync(req.body.password, salt);
-        usuario.password = password;
-      } else {
-        return res.status(401).send("Password requrida");
-      }
+      const salt = encrypt.genSaltSync();
+      const password = encrypt.hashSync(req.body.password, salt);
+      usuario.password = password;
 
       usuario.user = req.body.user;
       usuario.rol = req.body.rol;
@@ -44,91 +44,138 @@ router.post(
 
       usuario = await usuario.save();
 
-      console.log("Usuario creado correctamente");
+      console.info("Usuario creado correctamente");
       console.log(usuario);
-      return res.status(200).send(usuario);
+      return res.status(200).json({
+        message: "Usuario creado correctamente",
+        data: usuario,
+      });
     } catch (error) {
-      console.log("Usuario no se ha podido crear ", error);
-      return res.status(500).send("Usuario no se ha podido crear ");
+      console.log("Usuario no se ha podido crear \n");
+      console.error(error.name + ": " + error.message);
+      return res.status(500).json({
+        message: "Usuarios no se han podido crear",
+        cause: error,
+      });
     }
   }
 );
 
 router.get("/", validateJWT, async function (req, res) {
+  console.clear();
   try {
+    console.info("Usuarios Listados");
     const usuarios = await Usuario.find();
-
-    return res.status(200).send(usuarios);
+    return res.status(200).json({
+      message: "Usuarios Listados",
+      data: usuarios,
+    });
   } catch (error) {
-    console.log("Usuarios no se han podido listar ", error);
-    return res.status(500).send("Usuarios no se han podido listar ");
+    console.error("Usuarios no se han podido listar \n", error);
+    console.error(e.name + ": " + e.message);
+    return res.status(500).json({
+      message: "Usuarios no se han podido listar",
+      cause: error,
+    });
   }
 });
 
-router.get("/:userLogin", validateJWT, async function (req, res) {
+router.get("/:userLogin", async function (req, res) {
+  console.clear();
   try {
     const usuario = await Usuario.findOne({
       user: req.params.userLogin,
     });
 
-    if (!usuario) return res.status(404).send("usuario no se encuentra");
-
-    return res.status(200).send(usuario);
+    if (!usuario) {
+      console.warn("usuario no se encuentra");
+      return res.status(404).send("usuario no se encuentra");
+    } else {
+      console.info("Usuario encontrado");
+      return res.status(200).send(usuario);
+    }
   } catch (error) {
-    return res
-      .status(500)
-      .send("Ocurrio un error al tratar de leer el usuario");
+    console.error("Ocurrio un error al tratar de leer el usuario");
+    console.error(e.name + ": " + e.message);
+    return res.status(500).json({
+      message: "Ocurrio un error al tratar de leer el usuario",
+      cause: error,
+    });
   }
 });
 
-router.put("/:userLogin", checkValidateUser(), async function (req, res) {
-  let errors = validationResult(req);
+router.put(
+  "/:userLogin",
+  [checkValidateUser(), validateJWT],
+  async function (req, res) {
+    console.clear();
+    let errors = validationResult(req);
 
-  if (!errors.isEmpty()) {
-    console.log(errors.array());
-    return res.status(422).json({ errors: errors.array() });
-  }
+    if (!errors.isEmpty()) {
+      console.warn("Error en las validaciones \n", errors.array());
+      return res.status(422).json({
+        message: "Error en las validaciones",
+        errors: errors.array(),
+      });
+    }
+    try {
+      let usuario = await Usuario.findOne({
+        user: req.params.userLogin,
+      });
 
-  try {
-    let usuario = await Usuario.findOne({
-      user: req.params.userLogin,
-    });
+      if (!usuario) {
+        console.warn("Usuario no se encuentra");
+        return res.status(404).send("Usuario no se encuentra");
+      }
 
-    if (!usuario) return res.status(404).send("Usuario no se encuentra");
-
-    if (req.body.password != "") {
       const salt = encrypt.genSaltSync();
       const password = encrypt.hashSync(req.body.password, salt);
       usuario.password = password;
-    } else {
-      return res.status(401).send("Password requrida");
+
+      usuario.rol = req.body.rol;
+      usuario.estado = req.body.estado;
+      usuario.dateUpdate = moment(new Date()).format("YYYY-MM-DD h:mm:ss A");
+
+      usuario = await usuario.save();
+      console.info("Usuario Actualizado");
+      console.log(usuario);
+      return res.status(200).json({
+        message: "Usuario actualizado correctamente",
+        data: usuario,
+      });
+    } catch (error) {
+      console.log("Usuario no se ha podido actualizar \n");
+      console.error(error.name + ": " + error.message);
+      return res.status(500).json({
+        message: "Usuario no se ha podido actualizar",
+        cause: error,
+      });
     }
-
-    usuario.rol = req.body.rol;
-    usuario.estado = req.body.estado;
-    usuario.dateUpdate = moment(new Date()).format("YYYY-MM-DD h:mm:ss A");
-
-    usuario = await usuario.save();
-
-    return res.status(200).send(usuario);
-  } catch (error) {
-    res.status(500).send("Ocurrio un error al tratar de actualizar el usuario");
   }
-});
+);
 
 router.delete("/:userLogin", validateJWT, async function (req, res) {
+  console.clear();
   try {
     let usuario = await Usuario.findOneAndDelete({
       user: req.params.userLogin,
     });
 
     if (!usuario) {
+      console.warn("Usuario no esta registrado");
       return res.status(404).send("Usuario no esta registrado");
     } else {
+      console.info("Usuario eliminado con exito");
       return res.status(200).send("Usuario eliminado con exito");
     }
   } catch (error) {
-    res.status(500).send("El Usuario no se pudo eliminar");
+    console.log("El Usuario no se pudo eliminar \n");
+
+    console.error(error.name + ": " + error.message);
+    return res.status(500).json({
+      message: "El Usuario no se pudo eliminar",
+      cause: error,
+    });
   }
 });
 

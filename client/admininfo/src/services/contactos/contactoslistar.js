@@ -14,7 +14,7 @@ export const ListCiudadanos = () => {
       },
     };
 
-    let tokenAuthorization = localStorage.getItem("Authorization");
+    let tokenAuthorization = `Bearer ${localStorage.getItem("Authorization")}`;
 
     if (tokenAuthorization) {
       _header.headers["Authorization"] = tokenAuthorization;

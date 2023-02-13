@@ -7,6 +7,7 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 
 import { updateUsuario, getUsuario } from "../../routes/usuarios";
+import { AuthHeaders } from "../../components/authheader";
 
 export const UpdateRegistroUsuario = () => {
   const navigate = useNavigate();
@@ -21,20 +22,9 @@ export const UpdateRegistroUsuario = () => {
 
   useEffect(() => {
     const mostrarusuario = async () => {
-      let _header = {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      };
-
-      let tokenAuthorization = localStorage.getItem("Authorization");
-
-      if (tokenAuthorization) {
-        _header.headers["Authorization"] = tokenAuthorization;
-      }
-
+     
       try {
-        const { data } = await getUsuario(userLogin, _header);
+        const { data } = await getUsuario(userLogin);
         setUsuario(data);
       } catch (error) {
         console.log("Usuario no existe");
@@ -77,7 +67,8 @@ export const UpdateRegistroUsuario = () => {
 
     let data = "";
     try {
-      data = await updateUsuario(userLogin, usuario);
+      const authheader = AuthHeaders();
+      data = await updateUsuario(userLogin, usuario, authheader);
       console.log("Usuario actualizado correctamente");
       console.log(data);
       navigate("/usuarios");

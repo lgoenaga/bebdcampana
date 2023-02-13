@@ -24,10 +24,8 @@ function Login() {
   const validarUsuario =  async () => {
     const { data } = await valiteUser(valoresForm);
     if (data) {
-      console.log(data);
-      console.log("Usuario autorizado");
       localStorage.setItem("Authorization", data.access_token);
-      navigate("/inicio");
+     navigate("/inicio");
     } else {
       console.log("Datos no coinciden");
     }

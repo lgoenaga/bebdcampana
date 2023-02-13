@@ -8,6 +8,7 @@ import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 
 import { updateCiudadano, getCiudadano } from "../../routes/contactos";
+//import { AuthHeaders } from "../../components/authheader";
 
 export const UpdateCiudadano = () => {
   const navigate = useNavigate();
@@ -26,6 +27,8 @@ export const UpdateCiudadano = () => {
     dateBirth = "",
   } = valoresForm;
 
+
+  
   useEffect(() => {
     const mostrarcontacto = async () => {
       try {

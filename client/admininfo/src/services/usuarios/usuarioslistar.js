@@ -1,26 +1,16 @@
 import { useState, useEffect } from "react";
 import { listUsuarios } from "../../routes/usuarios";
+import { AuthHeaders } from "../../components/authheader"
 
 import TableUsuarios from "./usuariostable";
 
 export const ListUsuarios = () => {
   const [usuarios, setUsuarios] = useState([]);
   useEffect(() => {
-    let _header = {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    };
-
-    let tokenAuthorization = localStorage.getItem("Authorization");
-
-    if (tokenAuthorization) {
-      _header.headers["Authorization"] = tokenAuthorization;
-    }
-
     const mostrarUsuarios = async () => {
       try {
-        let { data } = await listUsuarios(_header);
+        const authheader = AuthHeaders();
+        let { data } = await listUsuarios(authheader);
         setUsuarios(data);
       } catch (error) {
         console.log(

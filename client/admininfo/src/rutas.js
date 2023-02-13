@@ -42,6 +42,7 @@ const Rutas = () => {
           path="/usuarios/:userLogin"
           element={<ViewUpdateUsuario />}
         />
+        <Route path="*" element={<ViewLogin />} />
       </Routes>
     </div>
   );

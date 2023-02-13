@@ -8,6 +8,7 @@ import Form from "react-bootstrap/Form";
 
 
 import { createUsuario } from "../../routes/usuarios";
+import { AuthHeaders } from "../../components/authheader";
 
 export function CrearRegistroUsuario() {
   const navigate = useNavigate();
@@ -15,23 +16,7 @@ export function CrearRegistroUsuario() {
 
   const [valoresForm, setValoresForm] = useState({});
 
-    let _header = {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    };
-
-    try {
-        let tokenAuthorization = localStorage.getItem("Authorization");
-
-        if (tokenAuthorization) {
-          _header.headers["Authorization"] = tokenAuthorization;
-        } 
-      
-    } catch (error) {
-      console.log("Acceso restringido");
-    }
-  
+  const authheader = AuthHeaders();
 
   const {
     user = "",
@@ -66,7 +51,7 @@ export function CrearRegistroUsuario() {
     };
 
     try {
-      data = await createUsuario(usuario, _header);
+      data = await createUsuario(usuario, authheader);
 
       console.log("Usuario creado");
       console.log(data);

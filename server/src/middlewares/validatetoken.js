@@ -1,11 +1,14 @@
 const jwt = require("jsonwebtoken");
 
 const validateJWT = (req, res, next) => {
-  const token = req.header("Authorization");
+  const authHeader = req.headers["authorization"];
+  const token = authHeader && authHeader.split(" ")[1];
+
+
   const api_key = process.env.API_KEY;
 
   if (!token) {
-    return res.status(401).json({ mensaje: "No esta autorizado" });
+    return res.status(403).json({ mensaje: "No esta autorizado" });
   }
 
   try {
