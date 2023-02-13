@@ -66,13 +66,10 @@ router.get("/", validateJWT, async function (req, res) {
   try {
     console.info("Usuarios Listados");
     const usuarios = await Usuario.find();
-    return res.status(200).json({
-      message: "Usuarios Listados",
-      data: usuarios,
-    });
+    return res.status(200).send(usuarios);
   } catch (error) {
     console.error("Usuarios no se han podido listar \n", error);
-    console.error(e.name + ": " + e.message);
+    console.error(error.name + ": " + error.message);
     return res.status(500).json({
       message: "Usuarios no se han podido listar",
       cause: error,
@@ -96,7 +93,7 @@ router.get("/:userLogin", async function (req, res) {
     }
   } catch (error) {
     console.error("Ocurrio un error al tratar de leer el usuario");
-    console.error(e.name + ": " + e.message);
+    console.error(error.name + ": " + error.message);
     return res.status(500).json({
       message: "Ocurrio un error al tratar de leer el usuario",
       cause: error,
