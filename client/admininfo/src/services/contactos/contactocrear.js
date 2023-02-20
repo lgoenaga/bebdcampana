@@ -14,6 +14,44 @@ export function CrearRegistroCiudadano() {
   const [validated, setValidated] = useState(false);
 
   const [valoresForm, setValoresForm] = useState({});
+  //const [formValidation, setformValidation] = useState({});
+
+  const [errors, setErrors] = useState({});
+
+  const findFormErrors = () => {
+    console.log("Entre a la busqueda de errores");
+    const { identification, firstName, firstSurname, cellPhone, email } =
+      valoresForm;
+    const newErrors = {};
+
+    if (!identification || identification === "")
+      newErrors.identification = "cannot be blank!";
+
+    if (!firstName || firstName === "") {
+      newErrors.firstName = "cannot be blank!";
+    }
+
+    if (!firstSurname || firstSurname === "") {
+      newErrors.firstSurname = "cannot be blank!";
+    }
+
+    if (!cellPhone || cellPhone === "") {
+      newErrors.cellPhone = "cannot be blank!";
+    } else {
+      if (cellPhone.length < 10)
+        newErrors.cellPhone = "CellPhone too short! Minimum 10 numeros";
+    }
+
+    if (!email || email === "") {
+      newErrors.email = "cannot be blank!";
+    }else {
+      if (email.length < 6)
+        newErrors.email = "wrong mail format!";
+    }
+
+
+    return newErrors;
+  };
 
   const {
     identification = "",
@@ -32,6 +70,7 @@ export function CrearRegistroCiudadano() {
   const handleOnChange = ({ target }) => {
     const { name, value } = target;
     setValoresForm({ ...valoresForm, [name]: value });
+    //   setformValidation({ ...valoresForm, [name]: value });
   };
 
   const handleOnSubmit = async (event) => {
@@ -41,6 +80,13 @@ export function CrearRegistroCiudadano() {
     if (form.checkValidity() === false) {
       event.preventDefault();
       event.stopPropagation();
+    }
+
+    const newErrors = findFormErrors();
+
+    if (Object.keys(newErrors).length > 0) {
+      console.log("Encontre errores");
+      setErrors(newErrors);
     }
 
     setValidated(true);
@@ -86,7 +132,6 @@ export function CrearRegistroCiudadano() {
               <Form.Group as={Col} controlId="formGridCedula">
                 <Form.Label>Cédula</Form.Label>
                 <Form.Control
-                  className="entrada-datos"
                   type="text"
                   placeholder="Entrar Cédula"
                   name="identification"
@@ -95,7 +140,7 @@ export function CrearRegistroCiudadano() {
                   required
                 />
                 <Form.Control.Feedback type="invalid">
-                  No puede estar vacio
+                  {errors.identification}
                 </Form.Control.Feedback>
               </Form.Group>
               <Form.Group as={Col} controlId="formGridBirthDate">
@@ -121,7 +166,7 @@ export function CrearRegistroCiudadano() {
                   required
                 />
                 <Form.Control.Feedback type="invalid">
-                  No puede estar vacio
+                  {errors.firstName}
                 </Form.Control.Feedback>
               </Form.Group>
               <Form.Group as={Col} controlId="formGridSecondName">
@@ -147,7 +192,7 @@ export function CrearRegistroCiudadano() {
                   required
                 />
                 <Form.Control.Feedback type="invalid">
-                  No puede estar vacio
+                  {errors.firstSurname}
                 </Form.Control.Feedback>
               </Form.Group>
 
@@ -176,15 +221,12 @@ export function CrearRegistroCiudadano() {
                   name="cellPhone"
                   value={cellPhone}
                   onChange={(e) => handleOnChange(e)}
-                  min="10"
-                  max="10"
+                  minLength="10"
+                  maxLength="10"
                   required
                 />
                 <Form.Control.Feedback type="invalid">
-                  No puede estar vacio
-                </Form.Control.Feedback>
-                <Form.Control.Feedback type="required">
-                  Debe tener minimo 10 digitos y ser solo numeros
+                  {errors.cellPhone}
                 </Form.Control.Feedback>
               </Form.Group>
               <Form.Group as={Col} controlId="formGridTelefono">
@@ -209,6 +251,9 @@ export function CrearRegistroCiudadano() {
                   onChange={(e) => handleOnChange(e)}
                   required
                 />
+                <Form.Control.Feedback type="invalid">
+                  {errors.email}
+                </Form.Control.Feedback>
               </Form.Group>
             </Row>
             <Row className="mb-3 fila-data">
