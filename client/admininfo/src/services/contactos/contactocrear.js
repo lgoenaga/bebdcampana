@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import moment from "moment";
 import { Container } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
@@ -23,6 +22,11 @@ export function CrearRegistroCiudadano() {
     firstSurname = "",
     secondSurname = "",
     dateBirth = "",
+    cellPhone = "",
+    phone = "",
+    email = "",
+    facebook = "",
+    instagram = "",
   } = valoresForm;
 
   const handleOnChange = ({ target }) => {
@@ -50,6 +54,11 @@ export function CrearRegistroCiudadano() {
       firstSurname,
       secondSurname,
       dateBirth,
+      cellPhone,
+      phone,
+      email,
+      facebook,
+      instagram,
     };
 
     try {
@@ -95,7 +104,7 @@ export function CrearRegistroCiudadano() {
                   placeholder="Fecha de Nacimiento"
                   name="dateBirth"
                   type="date"
-                  value={moment(dateBirth).format("DD-MMM-YYYY")}
+                  value={dateBirth}
                   onChange={(e) => handleOnChange(e)}
                 />
               </Form.Group>
@@ -156,51 +165,91 @@ export function CrearRegistroCiudadano() {
           </Form>
         </Container>
         <Container className="contenedorContactoUbicacion">
-          <Form className="formDatosContacto">
+          <Form className="formDatosContacto" noValidate validated={validated}>
             <Form.Label>Datos de Contacto</Form.Label>
             <Row className="mb-3 fila-data">
               <Form.Group as={Col} controlId="formGridCelular">
                 <Form.Label>Teléfono celular</Form.Label>
-                <Form.Control type="text" placeholder="Teléfono Celular" />
+                <Form.Control
+                  type="text"
+                  placeholder="Teléfono Celular"
+                  name="cellPhone"
+                  value={cellPhone}
+                  onChange={(e) => handleOnChange(e)}
+                  min="10"
+                  max="10"
+                  required
+                />
+                <Form.Control.Feedback type="invalid">
+                  No puede estar vacio
+                </Form.Control.Feedback>
+                <Form.Control.Feedback type="required">
+                  Debe tener minimo 10 digitos y ser solo numeros
+                </Form.Control.Feedback>
               </Form.Group>
               <Form.Group as={Col} controlId="formGridTelefono">
                 <Form.Label>Teléfono fijo</Form.Label>
-                <Form.Control type="text" placeholder="Teléfono fijo" />
+                <Form.Control
+                  type="text"
+                  placeholder="Teléfono fijo"
+                  name="phone"
+                  value={phone}
+                  onChange={(e) => handleOnChange(e)}
+                />
               </Form.Group>
             </Row>
             <Row className="mb-3 fila-data">
               <Form.Group as={Col} controlId="formGridEmail">
                 <Form.Label>Correo electrónico</Form.Label>
-                <Form.Control type="text" placeholder="Correo electrónico" />
+                <Form.Control
+                  type="email"
+                  placeholder="Correo electrónico"
+                  name="email"
+                  value={email}
+                  onChange={(e) => handleOnChange(e)}
+                  required
+                />
               </Form.Group>
             </Row>
             <Row className="mb-3 fila-data">
               <Form.Group as={Col} controlId="formGridFacebook">
                 <Form.Label>Facebook</Form.Label>
-                <Form.Control type="text" placeholder="Facebook" />
+                <Form.Control
+                  type="text"
+                  placeholder="Facebook"
+                  name="facebook"
+                  value={facebook}
+                  onChange={(e) => handleOnChange(e)}
+                />
               </Form.Group>
               <Form.Group as={Col} controlId="formGridInstagram">
                 <Form.Label>Instagram</Form.Label>
-                <Form.Control type="text" placeholder="Instagram" />
+                <Form.Control
+                  type="text"
+                  placeholder="Instagram"
+                  name="instagram"
+                  value={instagram}
+                  onChange={(e) => handleOnChange(e)}
+                />
               </Form.Group>
             </Row>
           </Form>
           <Form className="formDatosUbicacion">
             <Form.Label>Datos de Ubicacion</Form.Label>
             <Row className="mb-3 fila-data">
-              <Form.Group as={Col} controlId="formGridCelular">
+              <Form.Group as={Col} controlId="formGridDireccion">
                 <Form.Label>Dirección</Form.Label>
                 <Form.Control type="text" placeholder="Dirección" />
               </Form.Group>
             </Row>
             <Row className="mb-3 fila-data">
-              <Form.Group as={Col} controlId="formGridTelefono">
+              <Form.Group as={Col} controlId="formGridBarrio">
                 <Form.Label>Barrio / Vereda</Form.Label>
                 <Form.Control type="text" placeholder="Barrio / Vereda" />
               </Form.Group>
             </Row>
             <Row className="mb-3 fila-data">
-              <Form.Group as={Col} controlId="formGridEmail">
+              <Form.Group as={Col} controlId="formGridUrbanizacion">
                 <Form.Label>Urbanización / otros datos de ubicación</Form.Label>
                 <Form.Control
                   type="text"

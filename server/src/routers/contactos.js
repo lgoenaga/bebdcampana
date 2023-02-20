@@ -55,6 +55,11 @@ router.post("/crear", checkValidateContacto(), async function (req, res) {
     ciudadano.secondName = req.body.secondName;
     ciudadano.firstSurname = req.body.firstSurname;
     ciudadano.secondSurname = req.body.secondSurname;
+    ciudadano.cellPhone = req.body.cellPhone;
+    ciudadano.phone = req.body.phone;
+    ciudadano.email = req.body.email;
+    ciudadano.facebook = req.body.facebook;
+    ciudadano.instagram = req.body.instagram;
     ciudadano.dateBirth = moment(req.body.dateBirth).format("YYYY-MM-DD");
     ciudadano.dateCreation = moment(new Date()).format("YYYY-MM-DD h:mm:ss A");
     ciudadano.dateUpdate = moment(new Date()).format("YYYY-MM-DD h:mm:ss A");

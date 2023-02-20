@@ -33,9 +33,11 @@ router.post(
       let usuario = Usuario();
 
       const salt = encrypt.genSaltSync();
+
       const password = encrypt.hashSync(req.body.password, salt);
       usuario.password = password;
-
+      
+   
       usuario.user = req.body.user;
       usuario.rol = req.body.rol;
       usuario.estado = req.body.estado;

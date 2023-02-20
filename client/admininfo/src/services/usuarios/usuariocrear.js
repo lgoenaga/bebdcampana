@@ -6,7 +6,6 @@ import Button from "react-bootstrap/Button";
 
 import Form from "react-bootstrap/Form";
 
-
 import { createUsuario } from "../../routes/usuarios";
 import { AuthHeaders } from "../../components/authheader";
 
@@ -15,15 +14,31 @@ export function CrearRegistroUsuario() {
   const [validated, setValidated] = useState(false);
 
   const [valoresForm, setValoresForm] = useState({});
+  const [errors, setErrors] = useState({});
 
   const authheader = AuthHeaders();
 
-  const {
-    user = "",
-    password = "",
-    rol = "",
-    estado = "",
-  } = valoresForm;
+  const { user = "", password = "", rol = "", estado = "" } = valoresForm;
+
+  const findFormErrors = () => {
+    const { user, password, rol, estado } = valoresForm;
+    const newErrors = {};
+
+    if (!user || user === "") newErrors.name = "cannot be blank!";
+
+    if (!rol || rol === "") newErrors.rol = "select a rol!";
+
+    if (!password || password === "") {
+      newErrors.password = "cannot be blank!";
+    } else {
+      if (password.length <= 4)
+        newErrors.password = "Password too short! Minimum 4 characters";
+    }
+
+    if (!estado || estado === "") newErrors.estado = "select a state!";
+
+    return newErrors;
+  };
 
   const handleOnChange = ({ target }) => {
     const { name, value } = target;
@@ -32,11 +47,12 @@ export function CrearRegistroUsuario() {
 
   const handleOnSubmit = async (event) => {
     event.preventDefault();
+    event.stopPropagation();
 
-    const form = event.currentTarget;
-    if (form.checkValidity() === false) {
-      event.preventDefault();
-      event.stopPropagation();
+    const newErrors = findFormErrors();
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
     }
 
     setValidated(true);
@@ -66,7 +82,7 @@ export function CrearRegistroUsuario() {
       <Container className="contenedor-usuarios container-fluid ">
         <Form noValidate validated={validated}>
           <Form.Group className="mb-3" controlId="formBasicUser">
-            <Form.Label>Usuario</Form.Label>
+            <Form.Label>User</Form.Label>
             <Form.Control
               type="text"
               placeholder="Entrar Usuario"
@@ -75,6 +91,9 @@ export function CrearRegistroUsuario() {
               onChange={(e) => handleOnChange(e)}
               required
             />
+            <Form.Control.Feedback type="invalid">
+              {errors.name}
+            </Form.Control.Feedback>
           </Form.Group>
 
           <Form.Group className="mb-3" controlId="formBasicPassword">
@@ -84,35 +103,52 @@ export function CrearRegistroUsuario() {
               placeholder="Password"
               name="password"
               value={password}
+              minLength="4"
               onChange={(e) => handleOnChange(e)}
               required
             />
             <Form.Text className="text-muted">
               Never share your password with anyone.
             </Form.Text>
+            <Form.Control.Feedback type="invalid">
+              {errors.password}
+            </Form.Control.Feedback>
           </Form.Group>
 
           <Form.Group className="mb-3" controlId="formBasicRol">
             <Form.Label>Rol</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Entrar un Rol"
+            <select
+              className="form-select"
               name="rol"
+              required
               value={rol}
               onChange={(e) => handleOnChange(e)}
-              required
-            />
+            >
+              <option value=""> Open this select menu</option>
+              <option value="Administrador">Administrador</option>
+              <option value="Consultor">Consultor</option>
+              <option value="Editor">Editor</option>
+            </select>
+            <Form.Control.Feedback type="invalid">
+              {errors.rol}
+            </Form.Control.Feedback>
           </Form.Group>
           <Form.Group className="mb-3" controlId="formBasicEstado">
-            <Form.Label>Estado</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Entrar un estado"
+            <Form.Label>State</Form.Label>
+            <select
+              className="form-select"
               name="estado"
+              required
               value={estado}
               onChange={(e) => handleOnChange(e)}
-              required
-            />
+            >
+              <option value=""> Open this select menu</option>
+              <option value="Activo">Activo</option>
+              <option value="Inactivo">Inactivo</option>
+            </select>
+            <Form.Control.Feedback type="invalid">
+              {errors.estado}
+            </Form.Control.Feedback>
           </Form.Group>
           <Form.Group className="d-flex">
             <Button variant="primary" onClick={handleOnSubmit}>

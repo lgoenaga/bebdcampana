@@ -28,6 +28,27 @@ const Contacto = new Schema(
       type: String,
       required: false,
     },
+    cellPhone: {
+      type: String,
+      required: true,
+    },
+    phone: {
+      type: String,
+      required: false,
+    },
+    email: {
+      type: String,
+      unique: true,
+      required: true,
+    },
+    facebook: {
+      type: String,
+      required: false,
+    },
+    instagram: {
+      type: String,
+      required: false,
+    },
     dateCreation: {
       type: String,
       required: false,
