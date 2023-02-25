@@ -19,19 +19,26 @@ router.get("/", [validateJWT], async function (req, res) {
 
 router.get("/:documentoId", async function (req, res) {
   try {
-    const ciudadano = await Contacto.findOne({
-      identification: req.params.documentoId,
-    });
+    const role = req.payload.rol;
 
-    if (!ciudadano) return res.status(404).send("Ciudadano no se encuentra");
+    if (role === "Administrador" || role === "Editor") {
+      const ciudadano = await Contacto.findOne({
+        identification: req.params.documentoId,
+      });
 
-    res.status(200).send(ciudadano);
+      if (!ciudadano) return res.status(404).send("Ciudadano no se encuentra");
+
+      res.status(200).send(ciudadano);
+    } else {
+      console.warn("Usuario no Autorizado");
+      return res.status(401).json({ mesaje: "Usuario no autorizado" });
+    }
   } catch (error) {
     res.status(500).send("Ocurrio un error al tratar de leer el ciudadano");
   }
 });
 
-router.post("/crear", checkValidateContacto(), async function (req, res) {
+router.post("/crear", [checkValidateContacto(),validateJWT], async function (req, res) {
   let errors = validationResult(req);
 
   if (!errors.isEmpty()) {
@@ -39,41 +46,50 @@ router.post("/crear", checkValidateContacto(), async function (req, res) {
     return res.status(422).json({ errors: errors.array() });
   }
 
+  const role = req.payload.rol;
+
   try {
-    const existCiudadano = await Contacto.findOne({
-      identification: req.body.identification,
-    });
+    if (role === "Administrador" || role === "Editor") {
+      const existCiudadano = await Contacto.findOne({
+        identification: req.body.identification,
+      });
 
-    if (existCiudadano) {
-      return res.status(400).send("El ciudadano ya se encuentra registrado");
+      if (existCiudadano) {
+        return res.status(400).send("El ciudadano ya se encuentra registrado");
+      }
+
+      let ciudadano = Contacto();
+
+      ciudadano.identification = req.body.identification;
+      ciudadano.firstName = req.body.firstName;
+      ciudadano.secondName = req.body.secondName;
+      ciudadano.firstSurname = req.body.firstSurname;
+      ciudadano.secondSurname = req.body.secondSurname;
+      ciudadano.cellPhone = req.body.cellPhone;
+      ciudadano.phone = req.body.phone;
+      ciudadano.email = req.body.email;
+      ciudadano.facebook = req.body.facebook;
+      ciudadano.instagram = req.body.instagram;
+      ciudadano.dateBirth = moment(req.body.dateBirth).format("YYYY-MM-DD");
+      ciudadano.dateCreation = moment(new Date()).format(
+        "YYYY-MM-DD h:mm:ss A"
+      );
+      ciudadano.dateUpdate = moment(new Date()).format("YYYY-MM-DD h:mm:ss A");
+
+      ciudadano = await ciudadano.save();
+
+      res.status(200).send(ciudadano);
+    } else {
+      console.warn("Usuario no Autorizado");
+      return res.status(401).json({ mesaje: "Usuario no autorizado" });
     }
-
-    let ciudadano = Contacto();
-
-    ciudadano.identification = req.body.identification;
-    ciudadano.firstName = req.body.firstName;
-    ciudadano.secondName = req.body.secondName;
-    ciudadano.firstSurname = req.body.firstSurname;
-    ciudadano.secondSurname = req.body.secondSurname;
-    ciudadano.cellPhone = req.body.cellPhone;
-    ciudadano.phone = req.body.phone;
-    ciudadano.email = req.body.email;
-    ciudadano.facebook = req.body.facebook;
-    ciudadano.instagram = req.body.instagram;
-    ciudadano.dateBirth = moment(req.body.dateBirth).format("YYYY-MM-DD");
-    ciudadano.dateCreation = moment(new Date()).format("YYYY-MM-DD h:mm:ss A");
-    ciudadano.dateUpdate = moment(new Date()).format("YYYY-MM-DD h:mm:ss A");
-
-    ciudadano = await ciudadano.save();
-
-    res.status(200).send(ciudadano);
   } catch (error) {
     console.log("El registro no se efectuo ", error);
     res.status(500).send("El registro no se efectuo ");
   }
 });
 
-router.put("/:documentoId", checkValidateContacto(), async function (req, res) {
+router.put("/:documentoId", [checkValidateContacto(), validateJWT] , async function (req, res) {
   let errors = validationResult(req);
 
   if (!errors.isEmpty()) {
@@ -81,23 +97,30 @@ router.put("/:documentoId", checkValidateContacto(), async function (req, res) {
     return res.status(422).json({ errors: errors.array() });
   }
 
+  const role = req.payload.rol;
+
   try {
-    let ciudadano = await Contacto.findOne({
-      identification: req.params.documentoId,
-    });
+    if (role === "Administrador" || role === "Editor") {
+      let ciudadano = await Contacto.findOne({
+        identification: req.params.documentoId,
+      });
 
-    if (!ciudadano) return res.status(404).send("Ciudadano no se encuentra");
+      if (!ciudadano) return res.status(404).send("Ciudadano no se encuentra");
 
-    ciudadano.firstName = req.body.firstName;
-    ciudadano.secondName = req.body.secondName;
-    ciudadano.firstSurname = req.body.firstSurname;
-    ciudadano.secondSurname = req.body.secondSurname;
-    ciudadano.dateBirth = req.body.dateBirth;
-    ciudadano.dateUpdate = new Date();
+      ciudadano.firstName = req.body.firstName;
+      ciudadano.secondName = req.body.secondName;
+      ciudadano.firstSurname = req.body.firstSurname;
+      ciudadano.secondSurname = req.body.secondSurname;
+      ciudadano.dateBirth = req.body.dateBirth;
+      ciudadano.dateUpdate = new Date();
 
-    ciudadano = await ciudadano.save();
+      ciudadano = await ciudadano.save();
 
-    res.status(200).send(ciudadano);
+      res.status(200).send(ciudadano);
+    } else {
+      console.warn("Usuario no Autorizado");
+      return res.status(401).json({ mesaje: "Usuario no autorizado" });
+    }
   } catch (error) {
     res
       .status(500)
@@ -105,16 +128,22 @@ router.put("/:documentoId", checkValidateContacto(), async function (req, res) {
   }
 });
 
-router.delete("/:documentoId", async function (req, res) {
+router.delete("/:documentoId", validateJWT, async function (req, res) {
+  const role = req.payload.rol;
   try {
-    let ciudadano = await Contacto.findOneAndDelete({
-      identification: req.params.documentoId,
-    });
+    if (role === "Administrador") {
+      let ciudadano = await Contacto.findOneAndDelete({
+        identification: req.params.documentoId,
+      });
 
-    if (!ciudadano) {
-      return res.status(404).send("Ciudadano no esta registrado");
+      if (!ciudadano) {
+        return res.status(404).send("Ciudadano no esta registrado");
+      } else {
+        return res.status(200).send("Registro eliminado con exito");
+      }
     } else {
-      return res.status(200).send("Registro eliminado con exito");
+      console.warn("Usuario no autorizado");
+      return res.status(401).json({ mesaje: "Usuario no autorizado" });
     }
   } catch (error) {
     res.status(500).send("El registro no se pudo eliminar");

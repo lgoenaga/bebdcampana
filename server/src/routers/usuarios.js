@@ -23,35 +23,43 @@ router.post(
       });
     }
 
+    const role = req.payload.rol;
+
     try {
-      const existUser = await Usuario.findOne({ user: req.body.user });
-      if (existUser) {
-        console.warn("El usuario ya existe");
-        return res.status(409).send("El usuario ya existe");
+      if (role === "Administrador") {
+        const existUser = await Usuario.findOne({ user: req.body.user });
+        if (existUser) {
+          console.warn("El usuario ya existe");
+          return res.status(409).send("El usuario ya existe");
+        }
+
+        let usuario = Usuario();
+
+        const salt = encrypt.genSaltSync();
+
+        const password = encrypt.hashSync(req.body.password, salt);
+        usuario.password = password;
+
+        usuario.user = req.body.user;
+        usuario.rol = req.body.rol;
+        usuario.estado = req.body.estado;
+        usuario.dateCreation = moment(new Date()).format(
+          "YYYY-MM-DD h:mm:ss A"
+        );
+        usuario.dateUpdate = moment(new Date()).format("YYYY-MM-DD h:mm:ss A");
+
+        usuario = await usuario.save();
+
+        console.info("Usuario creado correctamente");
+        console.log(usuario);
+        return res.status(200).json({
+          message: "Usuario creado correctamente",
+          data: usuario,
+        });
+      } else {
+        console.warn("Usuario no Autorizado");
+        return res.status(401).json({ mesaje: "Usuario no autorizado" });
       }
-
-      let usuario = Usuario();
-
-      const salt = encrypt.genSaltSync();
-
-      const password = encrypt.hashSync(req.body.password, salt);
-      usuario.password = password;
-      
-   
-      usuario.user = req.body.user;
-      usuario.rol = req.body.rol;
-      usuario.estado = req.body.estado;
-      usuario.dateCreation = moment(new Date()).format("YYYY-MM-DD h:mm:ss A");
-      usuario.dateUpdate = moment(new Date()).format("YYYY-MM-DD h:mm:ss A");
-
-      usuario = await usuario.save();
-
-      console.info("Usuario creado correctamente");
-      console.log(usuario);
-      return res.status(200).json({
-        message: "Usuario creado correctamente",
-        data: usuario,
-      });
     } catch (error) {
       console.log("Usuario no se ha podido crear \n");
       console.error(error.name + ": " + error.message);
@@ -65,6 +73,7 @@ router.post(
 
 router.get("/", validateJWT, async function (req, res) {
   console.clear();
+
   try {
     console.info("Usuarios Listados");
     const usuarios = await Usuario.find();
@@ -81,17 +90,25 @@ router.get("/", validateJWT, async function (req, res) {
 
 router.get("/:userLogin", async function (req, res) {
   console.clear();
-  try {
-    const usuario = await Usuario.findOne({
-      user: req.params.userLogin,
-    });
 
-    if (!usuario) {
-      console.warn("usuario no se encuentra");
-      return res.status(404).send("usuario no se encuentra");
+  const role = req.payload.rol;
+
+  try {
+    if (role === "Administrador") {
+      const usuario = await Usuario.findOne({
+        user: req.params.userLogin,
+      });
+
+      if (!usuario) {
+        console.warn("usuario no se encuentra");
+        return res.status(404).send("usuario no se encuentra");
+      } else {
+        console.info("Usuario encontrado");
+        return res.status(200).send(usuario);
+      }
     } else {
-      console.info("Usuario encontrado");
-      return res.status(200).send(usuario);
+      console.warn("Usuario no autorizado");
+      return res.status(401).json({ mesaje: "Usuario no autorizado" });
     }
   } catch (error) {
     console.error("Ocurrio un error al tratar de leer el usuario");
@@ -117,31 +134,40 @@ router.put(
         errors: errors.array(),
       });
     }
+
+const role = req.payload.rol;
+
+
     try {
-      let usuario = await Usuario.findOne({
-        user: req.params.userLogin,
-      });
+      if (role === "Administrador") {
+        let usuario = await Usuario.findOne({
+          user: req.params.userLogin,
+        });
 
-      if (!usuario) {
-        console.warn("Usuario no se encuentra");
-        return res.status(404).send("Usuario no se encuentra");
+        if (!usuario) {
+          console.warn("Usuario no se encuentra");
+          return res.status(404).send("Usuario no se encuentra");
+        }
+
+        const salt = encrypt.genSaltSync();
+        const password = encrypt.hashSync(req.body.password, salt);
+        usuario.password = password;
+
+        usuario.rol = req.body.rol;
+        usuario.estado = req.body.estado;
+        usuario.dateUpdate = moment(new Date()).format("YYYY-MM-DD h:mm:ss A");
+
+        usuario = await usuario.save();
+        console.info("Usuario Actualizado");
+        console.log(usuario);
+        return res.status(200).json({
+          message: "Usuario actualizado correctamente",
+          data: usuario,
+        });
+      } else {
+        console.warn("Usuario no autorizado");
+        return res.status(401).json({ mesaje: "Usuario no autorizado" });
       }
-
-      const salt = encrypt.genSaltSync();
-      const password = encrypt.hashSync(req.body.password, salt);
-      usuario.password = password;
-
-      usuario.rol = req.body.rol;
-      usuario.estado = req.body.estado;
-      usuario.dateUpdate = moment(new Date()).format("YYYY-MM-DD h:mm:ss A");
-
-      usuario = await usuario.save();
-      console.info("Usuario Actualizado");
-      console.log(usuario);
-      return res.status(200).json({
-        message: "Usuario actualizado correctamente",
-        data: usuario,
-      });
     } catch (error) {
       console.log("Usuario no se ha podido actualizar \n");
       console.error(error.name + ": " + error.message);
@@ -155,17 +181,25 @@ router.put(
 
 router.delete("/:userLogin", validateJWT, async function (req, res) {
   console.clear();
-  try {
-    let usuario = await Usuario.findOneAndDelete({
-      user: req.params.userLogin,
-    });
 
-    if (!usuario) {
-      console.warn("Usuario no esta registrado");
-      return res.status(404).send("Usuario no esta registrado");
+const role = req.payload.rol;
+
+  try {
+    if (role === "Administrador") {
+      let usuario = await Usuario.findOneAndDelete({
+        user: req.params.userLogin,
+      });
+
+      if (!usuario) {
+        console.warn("Usuario no esta registrado");
+        return res.status(404).send("Usuario no esta registrado");
+      } else {
+        console.info("Usuario eliminado con exito");
+        return res.status(200).send("Usuario eliminado con exito");
+      }
     } else {
-      console.info("Usuario eliminado con exito");
-      return res.status(200).send("Usuario eliminado con exito");
+      console.warn("Usuario no autorizado");
+      return res.status(401).json({ mesaje: "Usuario no autorizado" });
     }
   } catch (error) {
     console.log("El Usuario no se pudo eliminar \n");

@@ -1,5 +1,5 @@
 const express = require("express");
-const getConexion = require("./helpers/dbconection");
+const getConexion = require("./library/dbconection");
 const dotenv = require("dotenv").config();
 const cors = require("cors");
 
