@@ -74,10 +74,17 @@ router.post(
 router.get("/", validateJWT, async function (req, res) {
   console.clear();
 
+  const role = req.payload.rol;
+
   try {
-    console.info("Usuarios Listados");
-    const usuarios = await Usuario.find();
-    return res.status(200).send(usuarios);
+    if (role === "Administrador") {
+      console.info("Usuarios Listados");
+      const usuarios = await Usuario.find();
+      return res.status(200).send(usuarios);
+    } else {
+      console.warn("Usuario no autorizado");
+      return res.status(401).json({ mesaje: "Usuario no autorizado" });
+    }
   } catch (error) {
     console.error("Usuarios no se han podido listar \n", error);
     console.error(error.name + ": " + error.message);
@@ -135,8 +142,7 @@ router.put(
       });
     }
 
-const role = req.payload.rol;
-
+    const role = req.payload.rol;
 
     try {
       if (role === "Administrador") {
@@ -182,7 +188,7 @@ const role = req.payload.rol;
 router.delete("/:userLogin", validateJWT, async function (req, res) {
   console.clear();
 
-const role = req.payload.rol;
+  const role = req.payload.rol;
 
   try {
     if (role === "Administrador") {
