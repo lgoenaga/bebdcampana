@@ -8,7 +8,8 @@ import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 
 import { updateCiudadano, getCiudadano } from "../../routes/contactos";
-//import { AuthHeaders } from "../../components/authheader";
+
+import { AuthHeaders } from "../../components/authheader";
 
 export const UpdateCiudadano = () => {
   const navigate = useNavigate();
@@ -71,7 +72,8 @@ export const UpdateCiudadano = () => {
 
     let data = "";
     try {
-      data = await updateCiudadano(documentoId, ciudadano);
+      const authheader = AuthHeaders();
+      data = await updateCiudadano(documentoId, ciudadano, authheader);
       console.log("Ciudadano actualizado correctamente");
       console.log(data);
       navigate("/contactos");

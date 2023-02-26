@@ -98,10 +98,8 @@ router.get("/", validateJWT, async function (req, res) {
 router.get("/:userLogin", async function (req, res) {
   console.clear();
 
-  const role = req.payload.rol;
-
-  try {
-    if (role === "Administrador") {
+   try {
+   
       const usuario = await Usuario.findOne({
         user: req.params.userLogin,
       });
@@ -113,10 +111,7 @@ router.get("/:userLogin", async function (req, res) {
         console.info("Usuario encontrado");
         return res.status(200).send(usuario);
       }
-    } else {
-      console.warn("Usuario no autorizado");
-      return res.status(401).json({ mesaje: "Usuario no autorizado" });
-    }
+    
   } catch (error) {
     console.error("Ocurrio un error al tratar de leer el usuario");
     console.error(error.name + ": " + error.message);

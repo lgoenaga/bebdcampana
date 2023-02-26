@@ -19,9 +19,7 @@ router.get("/", [validateJWT], async function (req, res) {
 
 router.get("/:documentoId", async function (req, res) {
   try {
-    const role = req.payload.rol;
 
-    if (role === "Administrador" || role === "Editor") {
       const ciudadano = await Contacto.findOne({
         identification: req.params.documentoId,
       });
@@ -29,10 +27,7 @@ router.get("/:documentoId", async function (req, res) {
       if (!ciudadano) return res.status(404).send("Ciudadano no se encuentra");
 
       res.status(200).send(ciudadano);
-    } else {
-      console.warn("Usuario no Autorizado");
-      return res.status(401).json({ mesaje: "Usuario no autorizado" });
-    }
+    
   } catch (error) {
     res.status(500).send("Ocurrio un error al tratar de leer el ciudadano");
   }

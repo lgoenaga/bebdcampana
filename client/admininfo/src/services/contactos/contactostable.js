@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { BsFillPenFill, BsFillTrashFill } from "react-icons/bs";
 import { deleteCiudadano } from "../../routes/contactos";
 
+import { AuthHeaders } from "../../components/authheader";
 
 
 const TableContactos = (props) => {
@@ -16,9 +17,10 @@ const TableContactos = (props) => {
 
   const borrarContacto = async () => {
     let data = "";
+    const authheader = AuthHeaders();
 
     try {
-      data = await deleteCiudadano(identification);
+      data = await deleteCiudadano(identification, authheader);
 
       console.log("Ciudadano Eliminado");
       console.log(data);

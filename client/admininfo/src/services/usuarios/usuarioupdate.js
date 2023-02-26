@@ -20,6 +20,8 @@ export const UpdateRegistroUsuario = () => {
 
   const { user = "", password = "", rol = "", estado = "" } = valoresForm;
 
+
+
   useEffect(() => {
     const mostrarusuario = async () => {
      

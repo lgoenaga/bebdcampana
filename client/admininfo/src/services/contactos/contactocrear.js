@@ -9,6 +9,8 @@ import Row from "react-bootstrap/Row";
 
 import { createCiudadano } from "../../routes/contactos";
 
+import { AuthHeaders } from "../../components/authheader";
+
 export function CrearRegistroCiudadano() {
   const navigate = useNavigate();
   const [validated, setValidated] = useState(false);
@@ -17,6 +19,8 @@ export function CrearRegistroCiudadano() {
   //const [formValidation, setformValidation] = useState({});
 
   const [errors, setErrors] = useState({});
+
+  const authheader = AuthHeaders();
 
   const findFormErrors = () => {
     console.log("Entre a la busqueda de errores");
@@ -108,7 +112,7 @@ export function CrearRegistroCiudadano() {
     };
 
     try {
-      data = await createCiudadano(ciudadano);
+      data = await createCiudadano(ciudadano, authheader);
 
       console.log("Usuario creado");
       console.log(data);

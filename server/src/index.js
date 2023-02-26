@@ -15,9 +15,9 @@ getConexion();
 
 app.use(express.json());
 
-// Hacer que node sirva los archivos de nuestro app React
+
 app.use(
-  express.static(path.resolve(__dirname, "../../client/admininfo/build"))
+  express.static(path.resolve(__dirname))
 );
 
 app.use("/contactos", require("./routers/contactos"));
@@ -27,7 +27,7 @@ app.use("/login", require ("./routers/login"));
 // Todas las peticiones GET que no hayamos manejado en las líneas anteriores retornaran nuestro app React
 app.get("*", (req, res) => {
   res.sendFile(
-    path.resolve(__dirname, "build", "index.html")
+    path.resolve(__dirname)
   );
 });
 

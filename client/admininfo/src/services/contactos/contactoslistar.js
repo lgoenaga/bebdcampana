@@ -4,26 +4,16 @@ import TableContactos from "./contactostable";
 
 import "../../css/registrociudadano.css"
 
+import { AuthHeaders } from "../../components/authheader";
+
 
 export const ListCiudadanos = () => {
   const [ciudadanos, setCiudadanos] = useState([]);
 
-    let _header = {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    };
-
-    let tokenAuthorization = `Bearer ${localStorage.getItem("Authorization")}`;
-
-    if (tokenAuthorization) {
-      _header.headers["Authorization"] = tokenAuthorization;
-    }
-
-
   const mostrarCiudadanos = async () => {
     try {
-      const { data } = await listCiudadanos(_header);
+      const authheader = AuthHeaders();
+      const { data } = await listCiudadanos(authheader);
       setCiudadanos(data);
     } catch (error) {
       console.log("Error desde el servidor verificar backend ", error);

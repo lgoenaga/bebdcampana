@@ -5,14 +5,7 @@ import { FaRegAddressCard, FaRegCalendarPlus } from "react-icons/fa";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
-import {
-  MdOutlineHowToVote,
-  MdSupervisorAccount,
-} from "react-icons/md";
-
-let correo;
-
-correo = "luisgoenagap@gmail.com";
+import { MdOutlineHowToVote, MdSupervisorAccount } from "react-icons/md";
 
 function BarraNavegacion() {
   return (
@@ -72,11 +65,6 @@ function BarraNavegacion() {
             </Navbar.Collapse>
           </Navbar>
         </div>
-      </div>
-      <div className="row-two">
-        <Navbar.Text className="usuarios-cuenta">
-          Signed in as : <a href="/usuarios/cuenta"> {correo}</a>
-        </Navbar.Text>
       </div>
       <div>
         <div className="separatorNavbar"></div>
