@@ -9,7 +9,7 @@ const Usuario = require("../models/usuarios");
 router.post("/", checkValidateLogin(), async function (req, res) {
   console.clear();
   let errors = validationResult(req);
-  
+
   if (!errors.isEmpty()) {
     console.error("Informacion incorrecta \n", errors.array());
     return res.status(422).json({ errors: errors.array() });
@@ -26,7 +26,6 @@ router.post("/", checkValidateLogin(), async function (req, res) {
     const pwd = compareSync(req.body.password, usuario.password);
 
     if (!pwd) {
-
       console.warn("Información Incorrecta");
       return res.status(402).json({ mensaje: "Información Incorrecta" });
     }
@@ -34,13 +33,17 @@ router.post("/", checkValidateLogin(), async function (req, res) {
     const token = generateJWT(usuario);
 
     console.clear();
-    console.info('Usuario Autorizado');
+    console.info("Usuario Autorizado");
 
     return res
       .status(200)
-      .json({ _id: usuario._id, user: usuario.user, rol: usuario.rol, access_token: token });
+      .json({
+        _id: usuario._id,
+        user: usuario.user,
+        rol: usuario.rol,
+        access_token: token,
+      });
   } catch (error) {
-    
     console.error("Oucrrio un error", error);
     res.status(500).json({ mensaje: "Error interno en el servidor" });
   }

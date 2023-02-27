@@ -9,7 +9,7 @@ import { AuthHeaders } from "../../components/authheader";
 
 export const ListCiudadanos = () => {
   const [ciudadanos, setCiudadanos] = useState([]);
-
+useEffect(() => {
   const mostrarCiudadanos = async () => {
     try {
       const authheader = AuthHeaders();
@@ -19,10 +19,11 @@ export const ListCiudadanos = () => {
       console.log("Error desde el servidor verificar backend ", error);
     }
   };
+  mostrarCiudadanos();
+}, []);
 
-  useEffect(() => {
-    mostrarCiudadanos();
-  });
+
+
 
   const DataTable = () => {
     let noReg = 1;

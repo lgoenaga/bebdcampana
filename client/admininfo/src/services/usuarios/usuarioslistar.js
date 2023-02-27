@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { listUsuarios } from "../../routes/usuarios";
-import { AuthHeaders } from "../../components/authheader"
+import { AuthHeaders } from "../../components/authheader";
+import Swal from "sweetalert2";
 
 import TableUsuarios from "./usuariostable";
 
@@ -11,6 +12,8 @@ export const ListUsuarios = () => {
       try {
         const authheader = AuthHeaders();
         let { data } = await listUsuarios(authheader);
+
+
         setUsuarios(data);
       } catch (error) {
         console.log(
@@ -20,7 +23,21 @@ export const ListUsuarios = () => {
       }
     };
 
-    mostrarUsuarios();
+     Swal.fire({
+       icon: "info",
+       title: "Listando usuarios",
+       showConfirmButton: false,
+       timer: 1000,
+       didOpen: () => {
+         Swal.showLoading();
+       },
+     });
+     setTimeout(() => {
+       Swal.close();
+       mostrarUsuarios();
+     }, 1000);
+
+    
   }, []);
 
   const DataTable = () => {

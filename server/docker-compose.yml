@@ -1,11 +1,13 @@
 version: "3.7"
 services:
- bebdcampana:
-  container_name: bebdcampana
-  image: lgoenaga/bebdcampana:V1
+ becampana:
+  container_name: becampana
+  image: becampana:V1
+  build:
+   context: .
   ports:
    - 3005:3005
   networks:
-   - netbdcampana
+   - netcampana
 networks:
- netbdcampana:
+ netcampana:

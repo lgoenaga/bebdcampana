@@ -1,13 +1,13 @@
 version: "3.7"
 services:
- febdcampana:
-  container_name: febdcampana
-  image: febdcampana:V1
+ fecampana:
+  container_name: fecampana
+  image: fecampana:V1
   build:
    context: .
   ports:
    - 3000:3000
   networks:
-   - febdcampana
+   - fecampana
 networks:
- febdcampana:
+ fecampana:
