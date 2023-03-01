@@ -55,9 +55,22 @@ function BarraNavegacion() {
                 <Nav.Link href="/lugarvotacion">
                   <MdOutlineHowToVote /> Lugar de Votación
                 </Nav.Link>
-                <Nav.Link href="/contactos">
-                  <MdSupervisorAccount /> Gestionar Contactos
-                </Nav.Link>
+                <NavDropdown
+                  title=<span>
+                    <MdSupervisorAccount /> Gestionar Ciudadanos
+                  </span>
+                  id="collasible-nav-dropdown2"
+                >
+                  <NavDropdown.Divider />
+                  <NavDropdown.Item href="/contactos">
+                    Listar Ciudadano
+                  </NavDropdown.Item>
+                  <NavDropdown.Item href="/Contactos/contactar">
+                    Contactar Ciudadano
+                  </NavDropdown.Item>
+                  <NavDropdown.Divider />
+                </NavDropdown>
+
                 <Nav.Link href="/asistencia">
                   <FaRegCalendarPlus /> Registro de Asistencia
                 </Nav.Link>

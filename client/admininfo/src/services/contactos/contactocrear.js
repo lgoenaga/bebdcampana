@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Container } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
@@ -21,6 +22,18 @@ export function CrearRegistroCiudadano() {
   const [errors, setErrors] = useState({});
 
   const authheader = AuthHeaders();
+
+  useEffect(() => {
+    Swal.fire({
+      icon: "info",
+      title: "Crear Ciudadano",
+      showConfirmButton: false,
+      timer: 1000,
+      didOpen: () => {
+        Swal.showLoading();
+      },
+    });
+  }, []);
 
   const findFormErrors = () => {
     console.log("Entre a la busqueda de errores");
@@ -48,11 +61,9 @@ export function CrearRegistroCiudadano() {
 
     if (!email || email === "") {
       newErrors.email = "cannot be blank!";
-    }else {
-      if (email.length < 6)
-        newErrors.email = "wrong mail format!";
+    } else {
+      if (email.length < 6) newErrors.email = "wrong mail format!";
     }
-
 
     return newErrors;
   };
@@ -75,6 +86,10 @@ export function CrearRegistroCiudadano() {
     const { name, value } = target;
     setValoresForm({ ...valoresForm, [name]: value });
     //   setformValidation({ ...valoresForm, [name]: value });
+  };
+
+  const pageHome = () => {
+    navigate("/inicio");
   };
 
   const handleOnSubmit = async (event) => {
@@ -111,15 +126,103 @@ export function CrearRegistroCiudadano() {
       instagram,
     };
 
-    try {
-      data = await createCiudadano(ciudadano, authheader);
+        Swal.fire({
+          title: "Desea guardar el Ciudadano? ",
+          html: "Saving will be canceled in 10 <strong></strong> seconds.",
+          timer: 10000,
+          timerProgressBar: true,
+          showDenyButton: true,
+          showCancelButton: true,
+          showConfirmButton: true,
+          cancelButtonText: "Cancel",
+          confirmButtonText: "Save",
+          denyButtonText: "Not Save",
+        }).then(async (result) => {
+          try {
+            if (result.isConfirmed) {
+              data = await createCiudadano(ciudadano, authheader);
 
-      console.log("Usuario creado");
-      console.log(data);
-      navigate("/contactos");
-    } catch (error) {
-      console.log("Usuario no ha sido creado,", error);
-    }
+              Swal.fire({
+                icon: "success",
+                title: "Ciudadano creado",
+                showConfirmButton: false,
+                timer: 2000,
+                didOpen: () => {
+                  Swal.showLoading();
+                },
+              });
+              setTimeout(() => {
+                Swal.close();
+                navigate("/contactos");
+              }, 2000);
+            } else {
+              if (result.isDenied) {
+                Swal.fire({
+                  icon: "info",
+                  title: "Ciudadano no ha sido creado",
+                  showConfirmButton: false,
+                  timer: 2000,
+                  didOpen: () => {
+                    Swal.showLoading();
+                  },
+                });
+                setTimeout(() => {
+                  Swal.close();
+                }, 2000);
+              }
+            }
+            if (result.dismiss === Swal.DismissReason.timer) {
+              Swal.fire({
+                icon: "error",
+                title: "Se ha superado el tiempo sin una respuesta",
+                showConfirmButton: false,
+                timer: 2000,
+                didOpen: () => {
+                  Swal.showLoading();
+                },
+              });
+              setTimeout(() => {
+                Swal.close();
+              }, 2000);
+            }
+
+            if (result.dismiss === "cancel") {
+              Swal.fire({
+                icon: "error",
+                title: "Se ha cancelado la creación del ciudadano",
+                showConfirmButton: false,
+                timer: 3000,
+              });
+              Swal.showLoading();
+              setTimeout(() => {
+                window.location.reload();
+              }, 3000);
+            }
+          } catch (error) {
+            let mensaje;
+            const newErrors = findFormErrors();
+
+            if (Object.keys(newErrors).length > 0) {
+              mensaje = "Error en las validaciones";
+            } else {
+              mensaje = error.response.data;
+            }
+            Swal.fire({
+              icon: "error",
+              title: mensaje,
+              showConfirmButton: false,
+              timer: 2000,
+            });
+            Swal.showLoading();
+          } finally {
+            if (data) {
+              setTimeout(() => {
+                Swal.close();
+              }, 2000);
+            }
+          }
+        });
+
   };
 
   return (
@@ -312,6 +415,9 @@ export function CrearRegistroCiudadano() {
       <Container className="button-contactos">
         <Button variant="primary" onClick={handleOnSubmit}>
           Guardar
+        </Button>
+        <Button variant="primary" onClick={pageHome}>
+          INICIO
         </Button>
       </Container>
     </>

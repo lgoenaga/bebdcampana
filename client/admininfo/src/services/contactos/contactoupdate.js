@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Container } from "react-bootstrap";
+import Swal from "sweetalert2";
 
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
@@ -39,8 +40,23 @@ export const UpdateCiudadano = () => {
         console.log("Ciudadano no existe");
       }
     };
-    mostrarcontacto();
+
+      Swal.fire({
+      icon: "info",
+      title: "Actualizar Ciudadano",
+      showConfirmButton: false,
+      timer: 1000,
+      didOpen: () => {
+        Swal.showLoading();
+      },
+    });
+    setTimeout(() => {
+      Swal.close();
+      mostrarcontacto();
+    }, 1000);
   }, [documentoId]);
+
+
 
   useEffect(() => {
     setValoresForm({
@@ -81,6 +97,11 @@ export const UpdateCiudadano = () => {
       console.log("Ciudadano no se pudo actualizar");
     }
   };
+
+    const pageHome = () => {
+      navigate("/inicio");
+    };
+
 
   return (
     <>
@@ -214,6 +235,9 @@ export const UpdateCiudadano = () => {
       <Container className="button-contactos">
         <Button variant="info" onClick={handleOnSubmit}>
           actualizar
+        </Button>
+        <Button variant="info" onClick={pageHome}>
+          INICIO
         </Button>
       </Container>
     </>

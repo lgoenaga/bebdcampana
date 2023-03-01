@@ -106,7 +106,7 @@ const TableUsuarios = (props) => {
           </Button>
           <Button
             className="botones-mod"
-            variant="info"
+            variant="warning"
             onClick={() => navigate(`/usuarios/${user}`)}
           >
             <BsFillPenFill />

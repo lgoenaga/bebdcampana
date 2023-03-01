@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { listCiudadanos } from "../../routes/contactos";
 import TableContactos from "./contactostable";
+import Swal from "sweetalert2";
 
 import "../../css/registrociudadano.css"
 
@@ -19,7 +20,23 @@ useEffect(() => {
       console.log("Error desde el servidor verificar backend ", error);
     }
   };
-  mostrarCiudadanos();
+
+     Swal.fire({
+       icon: "info",
+       title: "Listando contactos",
+       showConfirmButton: false,
+       timer: 1000,
+       didOpen: () => {
+         Swal.showLoading();
+       },
+     });
+     setTimeout(() => {
+       Swal.close();
+       mostrarCiudadanos();
+     }, 1000);
+
+
+  
 }, []);
 
 
