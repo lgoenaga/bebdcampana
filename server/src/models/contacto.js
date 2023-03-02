@@ -49,6 +49,18 @@ const Contacto = new Schema(
       type: String,
       required: false,
     },
+    address: {
+      type: String,
+      required: false,
+    },
+    neighborhood: {
+      type: String,
+      required: false,
+    },
+    urbanization: {
+      type: String,
+      required: false,
+    },
     dateCreation: {
       type: String,
       required: false,

@@ -1,6 +1,11 @@
 h1 {
-
   text-align: center;
+}
+
+.contenedor-datosPersonales .invalid-feedback{
+  font-size: xx-small;
+  margin: 0;
+  padding: 0;
 }
 
 .contenedor-datosPersonales {
@@ -9,6 +14,9 @@ h1 {
   width: 99%;
   min-height: max-content;
   max-height: min-content;
+    margin: 0;
+  padding: 0;
+ 
 }
 
 .contenedorContactoUbicacion {
@@ -19,11 +27,19 @@ h1 {
   padding: 0;
 }
 
+.formDatosContacto .invalid-feedback{
+  font-size: xx-small;
+    margin: 0;
+  padding: 0;
+}
+
 .formDatosContacto {
   width: 49%;
   min-height: max-content;
   max-height: min-content;
   border-right: 1px solid;
+    margin: 0;
+  padding: 0;
   padding-right: 10px;
 }
 
@@ -34,13 +50,12 @@ h1 {
   padding-left: 10px;
 }
 
-
-
-.button-contactos {
+.button-contactos.container {
   display: flex;
   justify-content: center;
-  padding-top: 10px;
-  margin-left: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  margin-left: 35px;
   margin-right: 10px;
 }
 

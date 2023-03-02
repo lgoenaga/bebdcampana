@@ -98,18 +98,18 @@ const TableUsuarios = (props) => {
 
         <td className="dato-contacto">
           <Button
-            variant="danger"
+            className="botones-mod"
+            variant="btn btn-outline-info"
+            onClick={() => navigate(`/usuarios/${user}`)}
+          >
+            <BsFillPenFill />
+          </Button>
+          <Button
+            variant="btn btn-outline-danger"
             onClick={borrarUsuario}
             className="botones-mod"
           >
             <BsFillTrashFill />
-          </Button>
-          <Button
-            className="botones-mod"
-            variant="warning"
-            onClick={() => navigate(`/usuarios/${user}`)}
-          >
-            <BsFillPenFill />
           </Button>
         </td>
       </tr>

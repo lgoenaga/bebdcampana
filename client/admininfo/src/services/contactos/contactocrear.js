@@ -80,6 +80,9 @@ export function CrearRegistroCiudadano() {
     email = "",
     facebook = "",
     instagram = "",
+    address = "",
+    neighborhood = "",
+    urbanization = "",
   } = valoresForm;
 
   const handleOnChange = ({ target }) => {
@@ -124,105 +127,107 @@ export function CrearRegistroCiudadano() {
       email,
       facebook,
       instagram,
+      address,
+      neighborhood,
+      urbanization,
     };
 
-        Swal.fire({
-          title: "Desea guardar el Ciudadano? ",
-          html: "Saving will be canceled in 10 <strong></strong> seconds.",
-          timer: 10000,
-          timerProgressBar: true,
-          showDenyButton: true,
-          showCancelButton: true,
-          showConfirmButton: true,
-          cancelButtonText: "Cancel",
-          confirmButtonText: "Save",
-          denyButtonText: "Not Save",
-        }).then(async (result) => {
-          try {
-            if (result.isConfirmed) {
-              data = await createCiudadano(ciudadano, authheader);
+    Swal.fire({
+      title: "Desea guardar el Ciudadano? ",
+      html: "Saving will be canceled in 10 <strong></strong> seconds.",
+      timer: 10000,
+      timerProgressBar: true,
+      showDenyButton: true,
+      showCancelButton: true,
+      showConfirmButton: true,
+      cancelButtonText: "Cancel",
+      confirmButtonText: "Save",
+      denyButtonText: "Not Save",
+    }).then(async (result) => {
+      try {
+        if (result.isConfirmed) {
+          data = await createCiudadano(ciudadano, authheader);
 
-              Swal.fire({
-                icon: "success",
-                title: "Ciudadano creado",
-                showConfirmButton: false,
-                timer: 2000,
-                didOpen: () => {
-                  Swal.showLoading();
-                },
-              });
-              setTimeout(() => {
-                Swal.close();
-                navigate("/contactos");
-              }, 2000);
-            } else {
-              if (result.isDenied) {
-                Swal.fire({
-                  icon: "info",
-                  title: "Ciudadano no ha sido creado",
-                  showConfirmButton: false,
-                  timer: 2000,
-                  didOpen: () => {
-                    Swal.showLoading();
-                  },
-                });
-                setTimeout(() => {
-                  Swal.close();
-                }, 2000);
-              }
-            }
-            if (result.dismiss === Swal.DismissReason.timer) {
-              Swal.fire({
-                icon: "error",
-                title: "Se ha superado el tiempo sin una respuesta",
-                showConfirmButton: false,
-                timer: 2000,
-                didOpen: () => {
-                  Swal.showLoading();
-                },
-              });
-              setTimeout(() => {
-                Swal.close();
-              }, 2000);
-            }
-
-            if (result.dismiss === "cancel") {
-              Swal.fire({
-                icon: "error",
-                title: "Se ha cancelado la creación del ciudadano",
-                showConfirmButton: false,
-                timer: 3000,
-              });
+          Swal.fire({
+            icon: "success",
+            title: "Ciudadano creado",
+            showConfirmButton: false,
+            timer: 2000,
+            didOpen: () => {
               Swal.showLoading();
-              setTimeout(() => {
-                window.location.reload();
-              }, 3000);
-            }
-          } catch (error) {
-            let mensaje;
-            const newErrors = findFormErrors();
-
-            if (Object.keys(newErrors).length > 0) {
-              mensaje = "Error en las validaciones";
-            } else {
-              mensaje = error.response.data;
-            }
+            },
+          });
+          setTimeout(() => {
+            Swal.close();
+            navigate("/contactos");
+          }, 2000);
+        } else {
+          if (result.isDenied) {
             Swal.fire({
-              icon: "error",
-              title: mensaje,
+              icon: "info",
+              title: "Ciudadano no ha sido creado",
               showConfirmButton: false,
               timer: 2000,
+              didOpen: () => {
+                Swal.showLoading();
+              },
             });
-            Swal.showLoading();
-          } finally {
-            if (data) {
-              setTimeout(() => {
-                Swal.close();
-              }, 2000);
-            }
+            setTimeout(() => {
+              Swal.close();
+            }, 2000);
           }
-        });
+        }
+        if (result.dismiss === Swal.DismissReason.timer) {
+          Swal.fire({
+            icon: "error",
+            title: "Se ha superado el tiempo sin una respuesta",
+            showConfirmButton: false,
+            timer: 2000,
+            didOpen: () => {
+              Swal.showLoading();
+            },
+          });
+          setTimeout(() => {
+            Swal.close();
+          }, 2000);
+        }
 
+        if (result.dismiss === "cancel") {
+          Swal.fire({
+            icon: "error",
+            title: "Se ha cancelado la creación del ciudadano",
+            showConfirmButton: false,
+            timer: 3000,
+          });
+          Swal.showLoading();
+          setTimeout(() => {
+            window.location.reload();
+          }, 3000);
+        }
+      } catch (error) {
+        let mensaje;
+        const newErrors = findFormErrors();
+
+        if (Object.keys(newErrors).length > 0) {
+          mensaje = "Error en las validaciones";
+        } else {
+          mensaje = error.response.data;
+        }
+        Swal.fire({
+          icon: "error",
+          title: mensaje,
+          showConfirmButton: false,
+          timer: 2000,
+        });
+        Swal.showLoading();
+      } finally {
+        if (data) {
+          setTimeout(() => {
+            Swal.close();
+          }, 2000);
+        }
+      }
+    });
   };
 
   return (
@@ -302,7 +307,6 @@ export function CrearRegistroCiudadano() {
                   {errors.firstSurname}
                 </Form.Control.Feedback>
               </Form.Group>
-
               <Form.Group as={Col} controlId="formGridSecondSurname">
                 <Form.Label>Segundo Apellido</Form.Label>
                 <Form.Control
@@ -386,18 +390,30 @@ export function CrearRegistroCiudadano() {
               </Form.Group>
             </Row>
           </Form>
-          <Form className="formDatosUbicacion">
+          <Form className="formDatosUbicacion" noValidate validated={validated}>
             <Form.Label>Datos de Ubicacion</Form.Label>
             <Row className="mb-3 fila-data">
               <Form.Group as={Col} controlId="formGridDireccion">
                 <Form.Label>Dirección</Form.Label>
-                <Form.Control type="text" placeholder="Dirección" />
+                <Form.Control
+                  type="text"
+                  placeholder="Dirección"
+                  name="address"
+                  value={address}
+                  onChange={(e) => handleOnChange(e)}
+                />
               </Form.Group>
             </Row>
             <Row className="mb-3 fila-data">
               <Form.Group as={Col} controlId="formGridBarrio">
                 <Form.Label>Barrio / Vereda</Form.Label>
-                <Form.Control type="text" placeholder="Barrio / Vereda" />
+                <Form.Control
+                  type="text"
+                  placeholder="Barrio / Vereda"
+                  name="neighborhood"
+                  value={neighborhood}
+                  onChange={(e) => handleOnChange(e)}
+                />
               </Form.Group>
             </Row>
             <Row className="mb-3 fila-data">
@@ -406,6 +422,9 @@ export function CrearRegistroCiudadano() {
                 <Form.Control
                   type="text"
                   placeholder="Urbanización / otros datos de ubicación"
+                  name="urbanization"
+                  value={urbanization}
+                  onChange={(e) => handleOnChange(e)}
                 />
               </Form.Group>
             </Row>
