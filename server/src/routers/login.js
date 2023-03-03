@@ -30,19 +30,24 @@ router.post("/", checkValidateLogin(), async function (req, res) {
       return res.status(402).json({ mensaje: "Información Incorrecta" });
     }
 
+    const estado = usuario.estado;
+
+    if (estado != "Activo") {
+      console.warn("Información Incorrecta");
+      return res.status(423).json({ mensaje: "Información Incorrecta" });
+    }
+
     const token = generateJWT(usuario);
 
     console.clear();
     console.info("Usuario Autorizado");
 
-    return res
-      .status(200)
-      .json({
-        _id: usuario._id,
-        user: usuario.user,
-        rol: usuario.rol,
-        access_token: token,
-      });
+    return res.status(200).json({
+      _id: usuario._id,
+      user: usuario.user,
+      rol: usuario.rol,
+      access_token: token,
+    });
   } catch (error) {
     console.error("Oucrrio un error", error);
     res.status(500).json({ mensaje: "Error interno en el servidor" });

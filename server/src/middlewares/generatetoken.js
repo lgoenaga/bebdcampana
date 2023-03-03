@@ -7,7 +7,7 @@ const generateJWT = (usuario) =>{
     const payload = { id: usuario.id, user: usuario.user, rol: usuario.rol };
     const token = jwt.sign(payload, `${api_key}`, { expiresIn: "1d" });
     return token;
-
+    
 }
 
 module.exports = {

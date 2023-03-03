@@ -12,8 +12,6 @@ export const ListUsuarios = () => {
       try {
         const authheader = AuthHeaders();
         let { data } = await listUsuarios(authheader);
-
-
         setUsuarios(data);
       } catch (error) {
         console.log(
@@ -42,11 +40,15 @@ export const ListUsuarios = () => {
 
   const DataTable = () => {
     let noReg = 1;
-
+    
     return usuarios.map((res, i) => {
       res.noReg = noReg++;
-      return <TableUsuarios obj={res} key={i} />;
-    });
+        if (res.user !== "administrador"){
+          return <TableUsuarios obj={res} key={i} />;
+        }else{
+          return null;
+        }
+      });
   };
 
   return (
@@ -63,6 +65,7 @@ export const ListUsuarios = () => {
         </thead>
         <tbody className="table-group-divider">{DataTable()}</tbody>
       </table>
+      
     </div>
   );
 };

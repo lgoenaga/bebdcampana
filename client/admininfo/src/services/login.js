@@ -24,12 +24,30 @@ function Login() {
   };
 
   const validarUsuario = async () => {
-    const { data } = await valiteUser(valoresForm);
-    if (data) {
-      localStorage.setItem("Authorization", data.access_token);
+    try {
+      const { data } = await valiteUser(valoresForm);
+
+      if (data) {
+        localStorage.setItem("Authorization", data.access_token);
+        Swal.fire({
+          icon: "success",
+          title: "Inicio Correcto",
+          showConfirmButton: false,
+          timer: 2000,
+          didOpen: () => {
+            Swal.showLoading();
+          },
+        });
+        setTimeout(() => {
+          navigate("/inicio");
+          Swal.close();
+        }, 2000);
+      } 
+    } catch (error) {
+      console.log("Datos no coinciden");
       Swal.fire({
-        icon: "success",
-        title: "Inicio Correcto",
+        icon: "error",
+        title: "Inicio Incorrecto",
         showConfirmButton: false,
         timer: 2000,
         didOpen: () => {
@@ -37,12 +55,9 @@ function Login() {
         },
       });
       setTimeout(() => {
-        navigate("/inicio");
         Swal.close();
-      }, 2000);
-    } else {
-      Swal.fire("Datos incorrectos");
-      console.log("Datos no coinciden");
+      }, 2000);;
+      
     }
   };
 
