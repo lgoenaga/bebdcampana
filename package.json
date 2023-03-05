@@ -1,29 +1,27 @@
 {
-  "name": "bdcampana",
+  "name": "backend",
   "version": "1.0.0",
-  "description": "Aplicación Almacenamiento de Información",
-  "keywords": [
-    "javascript",
-    "react",
-    "postgresql",
-    "node",
-    "html",
-    "express",
-    "css"
-  ],
+  "description": "BackEnd Aplicación Almacenamiento de Información",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ./src/index.js",
+    "build": "pm2 start ./src/index.js --name bdcampana",
+    "dev": "nodemon ./src/index.js"
+  },
   "author": "Luis Goenaga (luisgoenagap@gmail.com)",
   "license": "UNLICENSED",
   "private": "true",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "express-validator": "^6.14.3",
+    "jsonwebtoken": "^9.0.0",
+    "moment": "^2.29.4",
+    "mongoose": "^6.8.4"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/lgoenaga/bdcamapa.git"
-  },
-  "bugs": {
-    "url": "https://github.com/lgoenaga/bdcamapa/issues"
-  },
-  "homepage": "https://github.com/lgoenaga/bdcamapa#readme"
+  "engines": {
+    "node": "v18.14.0"
+  }
 }
