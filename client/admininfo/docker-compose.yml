@@ -8,6 +8,6 @@ services:
   ports:
    - 3000:3000
   networks:
-   - fecampana
+   - net-fecampana
 networks:
- fecampana:
+ net-fecampana:

@@ -1,13 +1,13 @@
 version: "3.7"
 services:
- becampana:
-  container_name: becampana
-  image: becampana:V1
+ be-campana:
+  container_name: be-campana
+  image: be-campana:V1
   build:
    context: .
   ports:
    - 3005:3005
   networks:
-   - netcampana
+   - net-be-campana
 networks:
- netcampana:
+ net-be-campana:
