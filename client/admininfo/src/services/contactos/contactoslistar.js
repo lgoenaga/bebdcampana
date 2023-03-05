@@ -9,7 +9,11 @@ import { AuthHeaders } from "../../components/authheader";
 
 
 export const ListCiudadanos = () => {
+  
   const [ciudadanos, setCiudadanos] = useState([]);
+    const [currentPage, setCurrentPage] = useState(0);
+    const [pageActual, setPageActual] = useState(1);
+
 useEffect(() => {
   const mostrarCiudadanos = async () => {
     try {
@@ -41,7 +45,7 @@ useEffect(() => {
 
 const btnnext = document.getElementById("btn-next");
 const btnpreview = document.getElementById("btn-preview");
-let page = usuarios.length / 12;
+let page = ciudadanos.length / 12;
 
 if (page - Math.trunc(page) > 0) {
   page = Math.trunc(page) + 1;
