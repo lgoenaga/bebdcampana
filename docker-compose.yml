@@ -6,7 +6,7 @@ services:
   build:
    context: .
   ports:
-   - 3005:3005
+   - 4005:4005
   networks:
    - net-be-campana
 networks:
